@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float movementSpeed = 1f;
+    [SerializeField] private float acceleration = 1f;
+    [SerializeField] private float maxSpeed = 5f;
     
     private Rigidbody2D _rigidbody;
     private float _movementX;
@@ -18,8 +21,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 movement = new Vector3(_movementX, 0f, 0f);
-        _rigidbody.AddForce(movement * movementSpeed);
+        Vector2 movement = new Vector2(_movementX, 0f);
+        _rigidbody.AddForce(movement * acceleration);
+
+        // Limits the player's movement speed in X-axis
+        if (Mathf.Abs(_rigidbody.velocity.x) > 5f)
+        {
+            Vector2 velocity = _rigidbody.velocity;
+            velocity.x = Mathf.Clamp(velocity.x, -maxSpeed, maxSpeed);
+            _rigidbody.velocity = velocity;
+        }
     }
     
     // Horizontal Movement P1(A and D) P2(Left and Right Arrow)
