@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class MovingPlatforms : MonoBehaviour
 {
+    [Tooltip("To add more target locations, duplicate one of the existing ones and add it to this list.")]
     [SerializeField] private List<Transform> targetLocations;
-    [SerializeField] private float moveSpeed = 0.01f;
+    [SerializeField][Range(0.0001f, 0.1f)] private float moveSpeed = 0.01f;
     
-    
-    private Transform previousLocation;
     private Transform targetLocation;
     private int targetIndex = 1;
     private BoxCollider2D _collider;
@@ -17,15 +16,17 @@ public class MovingPlatforms : MonoBehaviour
     private void Awake()
     {
         transform.position = targetLocations[0].position;
-        previousLocation = targetLocations[0];
         targetLocation = targetLocations[1];
-        StartCoroutine(MovePlatform());
     }
 
-    // Goes through the list of target locations
+    private void Update()
+    {
+        MovePlatform();
+    }
+    
+    // Goes through the list of target locations and wraps around when it gets to the end of the list
     private void ChangeTargetLocation()
     {
-        previousLocation = targetLocation;
         targetIndex++;
 
         if (targetIndex == targetLocations.Count)
@@ -35,24 +36,15 @@ public class MovingPlatforms : MonoBehaviour
 
         targetLocation = targetLocations[targetIndex];
     }
-    
-    IEnumerator MovePlatform()
+
+    // Moves the platform between each point and switches target when it reaches the destination
+    private void MovePlatform()
     {
-        float timer = 0f;
+        transform.position = Vector3.MoveTowards(transform.position, targetLocation.position, moveSpeed);
 
-        // Since the platform will always be moving, there's no reason to break the loop
-        while (true)
+        if (Vector3.Distance(transform.position, targetLocation.position) < 0.001f)
         {
-            timer += moveSpeed;
-            transform.position = Vector3.Lerp(previousLocation.position, targetLocation.position, timer);
-            
-            if (timer >= 1f)
-            {
-                timer -= 1f;
-                ChangeTargetLocation();
-            }
-
-            yield return new WaitForSeconds(0.01f);
+            ChangeTargetLocation();
         }
     }
 }
