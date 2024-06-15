@@ -17,7 +17,7 @@ public class AudioController : MonoBehaviour
     player.playerJumpingState.OnEnter += OnJump;
   }
 
-  void OnJump()
+  void OnJump(Player player)
   {
     Debug.Log("-- AUDIO FOR JUMP --");
   }

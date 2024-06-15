@@ -2,6 +2,7 @@ using System;
 
 public enum State
 {
+  DEAD,
   GROUNDED,
   JUMPING,
   CLIMBING,
@@ -18,18 +19,18 @@ public abstract class PlayerState
     Player = player;
   }
 
-  public event Action OnEnter;
-  public event Action OnExit;
+  public event Action<Player> OnEnter;
+  public event Action<Player> OnExit;
 
   public virtual void Enter()
   {
-    OnEnter?.Invoke();
+    OnEnter?.Invoke(Player);
   }
 
   public abstract State? CustomUpdate();
 
   public virtual void Exit()
   {
-    OnExit?.Invoke();
+    OnExit?.Invoke(Player);
   }
 }
