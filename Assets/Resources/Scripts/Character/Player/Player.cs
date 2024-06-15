@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour
     playerGroundedState = new PlayerGroundedState(this);
     playerJumpingState = new PlayerJumpingState(this);
     playerDeadState = new PlayerDeadState(this);
+    health = new PlayerHealthComponent(this);
   }
 
   public float jumpHeight = 10f;
@@ -27,6 +29,10 @@ public class Player : MonoBehaviour
   public PlayerGroundedState playerGroundedState;
   public PlayerJumpingState playerJumpingState;
   public PlayerDeadState playerDeadState;
+
+  public PlayerHealthComponent health;
+
+  public event Action<Checkpoint> OnCheckpointActivated;
 
   void Awake()
   {
@@ -85,7 +91,14 @@ public class Player : MonoBehaviour
   {
     rigidBody.position = Checkpoint;
     TransitionToState(State.GROUNDED);
+
     // Reset player health
     // Re-enable controls after X time
+  }
+
+  public void OnTriggerEnter2D(Collider2D collider)
+  {
+    if (collider.gameObject.TryGetComponent(out Checkpoint checkpoint))
+      OnCheckpointActivated?.Invoke(checkpoint);
   }
 }
