@@ -16,6 +16,8 @@ public class PlayerGroundedState : PlayerState
       return State.JUMPING;
     }
 
+    if (!Player.IsGrounded())
+      return State.JUMPING;
     return null;
   }
 }
