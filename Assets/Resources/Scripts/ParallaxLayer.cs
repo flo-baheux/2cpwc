@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class ParallaxLayer : MonoBehaviour
 {
-  /// <summary>
-  /// Movement of the layer is scaled by this value.
-  /// </summary>
   public Vector3 movementScale = Vector3.one;
 
   Transform _camera;
