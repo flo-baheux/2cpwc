@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MovingPlatform
   - Interactable
+  - Threat
   layers:
   - Default
   - TransparentFX
