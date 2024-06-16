@@ -783,7 +783,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   latestCheckpoint: {fileID: 0}
   Player1: {fileID: 209735527}
-  Player2: {fileID: 0}
 --- !u!4 &1510979525
 Transform:
   m_ObjectHideFlags: 0
@@ -21056,6 +21055,10 @@ PrefabInstance:
       propertyPath: runningSpeed
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 8919373028530161010, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
+      propertyPath: playerInputAsset
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 8e6f1310e9383d74bad5f390444944ac, type: 3}
     - target: {fileID: 8919373028530161010, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
       propertyPath: jumpStepThreshold
       value: 5

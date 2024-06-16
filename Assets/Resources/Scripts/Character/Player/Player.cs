@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+  public InputActionAsset playerInputAsset;
+
   Player()
   {
     playerGroundedState = new PlayerGroundedState(this);
@@ -12,7 +14,13 @@ public class Player : MonoBehaviour
     playerDeadState = new PlayerDeadState(this);
     health = new PlayerHealthComponent(this);
   }
+  public PlayerGroundedState playerGroundedState;
+  public PlayerJumpingState playerJumpingState;
+  public PlayerDeadState playerDeadState;
 
+  public PlayerHealthComponent health;
+
+  // Movement parameters
   public float jumpHeight = 10f;
   public float fallSpeed = 12f;
   public float runningSpeed = 15f;
@@ -26,13 +34,9 @@ public class Player : MonoBehaviour
 
   public PlayerState currentState;
 
-  public PlayerGroundedState playerGroundedState;
-  public PlayerJumpingState playerJumpingState;
-  public PlayerDeadState playerDeadState;
-
-  public PlayerHealthComponent health;
-
   public event Action<Checkpoint> OnCheckpointActivated;
+
+  private Interactable _currentInteractable;
 
   void Awake()
   {
@@ -45,15 +49,16 @@ public class Player : MonoBehaviour
       {State.DEAD, playerDeadState},
     };
     currentState = States[State.GROUNDED];
+    playerInputAsset.Enable();
   }
 
   void Update()
   {
     if (controlsEnabled)
     {
-      float horizontalInput = Input.GetAxisRaw("Horizontal");
+      float horizontalInput = playerInputAsset.FindAction("Move").ReadValue<float>();
 
-      float horizontalVelocity = horizontalInput * runningSpeed;
+      float horizontalVelocity = horizontalInput * runningSpeed; ;
       rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
 
       if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -81,7 +86,7 @@ public class Player : MonoBehaviour
 
   public void TransitionToState(State newState)
   {
-    Debug.Log("New state - " + newState);
+    // Debug.Log("New state - " + newState);
     currentState.Exit();
     currentState = States[newState];
     currentState.Enter();
@@ -96,9 +101,21 @@ public class Player : MonoBehaviour
     // Re-enable controls after X time
   }
 
-  public void OnTriggerEnter2D(Collider2D collider)
+  public void OnTriggerEnter2D(Collider2D other)
   {
-    if (collider.gameObject.TryGetComponent(out Checkpoint checkpoint))
+    if (other.gameObject.TryGetComponent(out Checkpoint checkpoint))
       OnCheckpointActivated?.Invoke(checkpoint);
+
+    if (other.CompareTag("Interactable"))
+      _currentInteractable = other.GetComponent<Interactable>();
+  }
+
+  private void Interact() =>
+    _currentInteractable?.Interact();
+
+  private void OnTriggerExit2D(Collider2D other)
+  {
+    if (other.GetComponent<Interactable>() != null)
+      _currentInteractable = null;
   }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerGroundedState : PlayerState
 {
@@ -9,7 +10,7 @@ public class PlayerGroundedState : PlayerState
 
   public override State? CustomUpdate()
   {
-    if (Player.controlsEnabled && Input.GetKeyDown(KeyCode.Space))
+    if (Player.controlsEnabled && Player.playerInputAsset.FindAction("Jump").WasPressedThisFrame())
     {
       float jumpForce = Mathf.Sqrt(Player.jumpHeight * -2 * (Physics2D.gravity.y * Player.rigidBody.gravityScale));
       Player.rigidBody.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
