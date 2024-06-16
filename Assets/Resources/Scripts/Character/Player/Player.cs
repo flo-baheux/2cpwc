@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-  public InputActionAsset playerInputAsset;
-
   Player()
   {
     playerGroundedState = new PlayerGroundedState(this);
@@ -26,7 +24,9 @@ public class Player : MonoBehaviour
   public float runningSpeed = 15f;
 
   [NonSerialized] public Rigidbody2D rigidBody;
+  [NonSerialized] public PlayerInput playerInput;
   private CapsuleCollider2D capsuleCollider;
+
 
   public bool controlsEnabled = true;
 
@@ -38,10 +38,13 @@ public class Player : MonoBehaviour
 
   private Interactable _currentInteractable;
 
+
   void Awake()
   {
     rigidBody = GetComponent<Rigidbody2D>();
     capsuleCollider = GetComponent<CapsuleCollider2D>();
+    playerInput = GetComponent<PlayerInput>();
+    playerInput.actions["Interact"].performed += OnInteract;
 
     States = new Dictionary<State, PlayerState>() {
       {State.GROUNDED, playerGroundedState},
@@ -49,21 +52,18 @@ public class Player : MonoBehaviour
       {State.DEAD, playerDeadState},
     };
     currentState = States[State.GROUNDED];
-    playerInputAsset.Enable();
   }
 
   void Update()
   {
     if (controlsEnabled)
     {
-      float horizontalInput = playerInputAsset.FindAction("Move").ReadValue<float>();
+      float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
 
       float horizontalVelocity = horizontalInput * runningSpeed; ;
       rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
-
-      if (Input.GetKeyDown(KeyCode.LeftControl))
-        TransitionToState(State.DEAD);
     }
+
 
     State? newState = currentState.CustomUpdate();
     if (newState.HasValue)
@@ -78,15 +78,8 @@ public class Player : MonoBehaviour
     return raycastHit.collider;
   }
 
-  // Debug IsGrounded box collider
-  // public void OnDrawGizmos()
-  // {
-  //   Gizmos.DrawCube(new Vector2(capsuleCollider.bounds.center.x, capsuleCollider.bounds.min.y), new Vector2(capsuleCollider.bounds.size.x + 0.2f, 0.05f));
-  // }
-
   public void TransitionToState(State newState)
   {
-    // Debug.Log("New state - " + newState);
     currentState.Exit();
     currentState = States[newState];
     currentState.Enter();
@@ -110,7 +103,7 @@ public class Player : MonoBehaviour
       _currentInteractable = other.GetComponent<Interactable>();
   }
 
-  private void Interact() =>
+  private void OnInteract(InputAction.CallbackContext context) =>
     _currentInteractable?.Interact();
 
   private void OnTriggerExit2D(Collider2D other)

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13966, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: Room
+  m_EditorClassIdentifier: 
+  templateScene: {fileID: 102900000, guid: 23c59f066f80a8b47bc90190e129ac5d, type: 3}
+  templateName: Room Template
+  description: Template of a room with doors, level, checkpoints and a camera that
+    will automatically follow players once added in the scene
+  preview: {fileID: 0}
+  dependencies:
+  - dependency: {fileID: 2800000, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 8202431678227975174, guid: a8715d765de2cd64883b35321e0dfe11, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 11400000, guid: 63d9e8ab319054248b35f758c628c258, type: 2}
+    instantiationMode: 1
+  - dependency: {fileID: 2800000, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 7398566400970461931, guid: 45332405f93d1fa44b6e5e498cb26803, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 5f2a108eb023faf43a809979fd3d38f2, type: 3}
+    instantiationMode: 1
+  templatePipeline: {fileID: 0}
+  badge: {fileID: 0}
+  addToDefaults: 0
