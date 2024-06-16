@@ -304,7 +304,11 @@ Transform:
   m_GameObject: {fileID: 387706666}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: -2.99, y: 0, z: -10}
+=======
+  m_LocalPosition: {x: -5.547, y: -1.985, z: -10}
+>>>>>>> 4db596e (Tweaked animation time and colliders)
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -470,7 +474,11 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: -2.99, y: 0, z: -10}
+=======
+  m_LocalPosition: {x: -5.547, y: -1.985, z: -10}
+>>>>>>> 4db596e (Tweaked animation time and colliders)
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -616,6 +624,41 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!70 &1324608967
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324608955}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.17}
+  m_Size: {x: 0.56, y: 0.33}
+  m_Direction: 1
 --- !u!1001 &1371455243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20927,11 +20970,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2614344317219274795, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
       propertyPath: m_LocalPosition.x
+<<<<<<< HEAD
       value: -2.99
       objectReference: {fileID: 0}
     - target: {fileID: 2614344317219274795, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+=======
+      value: -5.547
+      objectReference: {fileID: 0}
+    - target: {fileID: 2614344317219274795, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.985
+>>>>>>> 4db596e (Tweaked animation time and colliders)
       objectReference: {fileID: 0}
     - target: {fileID: 2614344317219274795, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
       propertyPath: m_LocalPosition.z
@@ -21023,11 +21074,26 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7124420221546962435, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
+      propertyPath: m_Size.x
+      value: 0.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124420221546962435, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
+      propertyPath: m_Size.y
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7332386314113277380, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 0}
+<<<<<<< HEAD
 >>>>>>> c2be564 (Addded placeholder animations)
+=======
+    - target: {fileID: 7588904791989712182, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+>>>>>>> 4db596e (Tweaked animation time and colliders)
     - target: {fileID: 8279305994364057985, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
       propertyPath: m_Name
       value: Character
@@ -21088,6 +21154,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8279305994364057985, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1324608967}
     - targetCorrespondingSourceObject: {fileID: 8279305994364057985, guid: 3ab41100b4cf7c84f96081061cac7a97, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1324608961}

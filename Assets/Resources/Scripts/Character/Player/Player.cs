@@ -58,9 +58,9 @@ public class Player : MonoBehaviour
 
   void Update()
   {
+    float horizontalInput = playerInputAsset.FindAction("Move").ReadValue<float>();
     if (controlsEnabled)
     {
-      float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
       float horizontalVelocity = horizontalInput * runningSpeed;
       if (horizontalVelocity != rigidBody.velocity.x)
       {
@@ -75,13 +75,16 @@ public class Player : MonoBehaviour
         }
       }
       rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
+
+      //if (Input.GetKeyDown(KeyCode.LeftControl))
+      //  TransitionToState(State.DEAD);      
     }
 
     State? newState = currentState.CustomUpdate();
     if (newState.HasValue)
       TransitionToState(newState.Value);
 
-    animator.SetFloat("HorizontalInput", Math.Abs(playerInputAsset.FindAction("Move").ReadValue<float>()));
+    animator.SetFloat("HorizontalInput", Math.Abs(horizontalInput));
     animator.SetFloat("VelocityY", rigidBody.velocity.y);
     animator.SetBool("IsGrounded", currentState.state == State.GROUNDED);
     animator.SetBool("IsCrouched", currentState.state == State.CROUCHING);
@@ -92,9 +95,15 @@ public class Player : MonoBehaviour
   {
     Vector2 center = new(capsuleCollider.bounds.center.x, capsuleCollider.bounds.min.y);
     Vector2 size = new(capsuleCollider.bounds.size.x + 0.2f, 0.05f);
-    RaycastHit2D raycastHit = Physics2D.BoxCast(center, size, 0f, Vector2.down, 3f, LayerMask.GetMask("Ground"));
+    RaycastHit2D raycastHit = Physics2D.BoxCast(center, size, 0f, Vector2.down, 0f, LayerMask.GetMask("Ground"));
     return raycastHit.collider;
   }
+
+  // // Debug IsGrounded box collider
+  // public void OnDrawGizmos()
+  // {
+  //   Gizmos.DrawCube(new Vector2(capsuleCollider.bounds.center.x, capsuleCollider.bounds.min.y), new Vector2(capsuleCollider.bounds.size.x + 0.2f, 0.05f));
+  // }
 
   public void TransitionToState(State newState)
   {
