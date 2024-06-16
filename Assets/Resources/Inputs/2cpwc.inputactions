@@ -2,68 +2,27 @@
     "name": "2cpwc",
     "maps": [
         {
-            "name": "General",
-            "id": "6099a41a-2432-49c4-8e2a-8109d9e3b68b",
-            "actions": [
-                {
-                    "name": "Map",
-                    "type": "Button",
-                    "id": "f93a0f28-e1a0-48e2-a53d-7542c741cd2c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "QuickSave",
-                    "type": "Button",
-                    "id": "d08212cf-73d5-4677-975f-07026d0d2ce2",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "2fecfb68-38e8-40c7-9382-b2357fbf502b",
-                    "path": "<Keyboard>/m",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Map",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9dd8921b-d2b2-4c9a-a6b5-d5af776def80",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Map",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "61687558-d75f-44ef-a83e-2484050467a1",
-                    "path": "<Keyboard>/f5",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "QuickSave",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "Player1",
             "id": "d7475ec9-8e0c-4eba-acf5-e403cddd3930",
             "actions": [
+                {
+                    "name": "QuickSave",
+                    "type": "Button",
+                    "id": "f4be5d5d-b7aa-47d3-aa7a-adeffaaf9104",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Map",
+                    "type": "Button",
+                    "id": "0e3a9f4b-b886-4060-8c26-39d7683f6687",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
                 {
                     "name": "Move",
                     "type": "Value",
@@ -128,7 +87,29 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "a8934b8c-1e6a-4bdd-8e73-a9c73615d09d",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "51ef1a85-7d73-48d5-88ea-2ab696814d4b",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -139,7 +120,29 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "4ae85dcf-6b65-467c-9783-3a79fea04f26",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "eaf70784-f87d-46e6-8ad8-b909fc753696",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -150,7 +153,18 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse;Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "96824746-e6ce-4815-ba20-99a7f681fba0",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -187,17 +201,68 @@
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e596f4ee-98ec-40b4-a127-d91181f41a92",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f06964d4-07c4-486e-8956-461e533e0e94",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b83008b-42e3-4c79-a551-47b291f58385",
+                    "path": "<Keyboard>/f5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuickSave",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
         {
             "name": "Player2",
-            "id": "8f27dc71-200e-44b9-83ff-ef2ce8618f8e",
+            "id": "f61d98cf-709c-42b5-8689-8d4234e99111",
             "actions": [
+                {
+                    "name": "QuickSave",
+                    "type": "Button",
+                    "id": "d3f6efd4-c459-430d-b199-ddf35f26b33f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Map",
+                    "type": "Button",
+                    "id": "ab5f0824-aa08-46c3-baf4-0f6a8c2159d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
                 {
                     "name": "Move",
                     "type": "Value",
-                    "id": "90fe13da-40a4-4e09-8ba1-e5bd39420281",
+                    "id": "03e907de-e479-4566-9487-e7d31efdb3c0",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -206,7 +271,7 @@
                 {
                     "name": "Jump",
                     "type": "Button",
-                    "id": "4dfd418e-50dc-46b8-a692-6aebcd8ed3e5",
+                    "id": "883bbe6b-b140-4022-bc0d-7754ad2ce0e9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -215,7 +280,7 @@
                 {
                     "name": "DropDown",
                     "type": "Button",
-                    "id": "a9796b8b-9dea-4cc5-aa20-26cf007fc4d2",
+                    "id": "193b62cd-2ddd-479a-960b-ceb9b7707365",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -224,7 +289,7 @@
                 {
                     "name": "Crouch",
                     "type": "Button",
-                    "id": "36bf2640-30be-4030-8382-8ce5666b4126",
+                    "id": "874f4b80-882f-48c4-addb-7e9cdf3621ef",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -233,7 +298,7 @@
                 {
                     "name": "Interact",
                     "type": "Button",
-                    "id": "9a99c50a-b01c-4f76-915b-c4f872f1eebb",
+                    "id": "c801ca6f-5919-4bc7-b608-f22eebb99b81",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -243,7 +308,7 @@
             "bindings": [
                 {
                     "name": "1D Axis",
-                    "id": "0752456c-dc87-43c7-8282-1c41df46a786",
+                    "id": "952b5cea-2552-4c7b-9cb3-88ec609a3e5d",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
@@ -254,7 +319,7 @@
                 },
                 {
                     "name": "negative",
-                    "id": "65e585a9-583e-4152-9a8b-12b1636912e2",
+                    "id": "71f3a7bf-421e-464f-a728-0313d48304b9",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -265,7 +330,7 @@
                 },
                 {
                     "name": "positive",
-                    "id": "3ff8c0d8-23ed-4ff2-acb2-24e4d7f04510",
+                    "id": "a47c07de-e02b-4a62-951e-7d88d4746d7a",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
@@ -276,7 +341,7 @@
                 },
                 {
                     "name": "",
-                    "id": "b32736d0-1d65-49cf-9374-bfb081407942",
+                    "id": "3b609858-76f4-41a1-a3ca-820c7ba54c6a",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
@@ -287,7 +352,7 @@
                 },
                 {
                     "name": "",
-                    "id": "cd535495-9389-4c64-bc18-93432b969589",
+                    "id": "37fa2daf-14a2-4289-84aa-f52f7a80a845",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
@@ -298,7 +363,7 @@
                 },
                 {
                     "name": "",
-                    "id": "ac36bcf9-f397-4c0c-be33-7139ff5234d5",
+                    "id": "ff1455ff-72f2-4894-8ccc-6751e9e36793",
                     "path": "<Keyboard>/rightCtrl",
                     "interactions": "",
                     "processors": "",
@@ -309,12 +374,45 @@
                 },
                 {
                     "name": "",
-                    "id": "3b468bdc-a20b-4bf4-8595-d28595b154cc",
+                    "id": "7b23f915-dd4d-43e4-abb4-85fbd494b177",
                     "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86b570ca-2dc4-4bf2-9db1-4657323d33af",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "956b9137-a29d-4d54-92f9-3c85e32c80d0",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7711dadc-12fa-4c4d-8823-d26a8590922c",
+                    "path": "<Keyboard>/f5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuickSave",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
