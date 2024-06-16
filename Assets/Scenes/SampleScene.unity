@@ -783,6 +783,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   latestCheckpoint: {fileID: 0}
   Player1: {fileID: 209735527}
+  collectibles: []
 --- !u!4 &1510979525
 Transform:
   m_ObjectHideFlags: 0

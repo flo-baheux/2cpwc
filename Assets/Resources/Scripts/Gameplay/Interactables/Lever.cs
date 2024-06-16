@@ -6,7 +6,7 @@ public class Lever : MonoBehaviour, Interactable
 {
     [SerializeField] private List<Barrier> barriers;
 
-    public void Interact()
+    public void Interact(Player player)
     {
         Debug.Log("Interacting with lever");
 
