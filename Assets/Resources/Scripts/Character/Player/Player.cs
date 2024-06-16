@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
   }
 
   private void OnInteract(InputAction.CallbackContext context) =>
-    _currentInteractable?.Interact();
+    _currentInteractable?.Interact(this);
 
   private void OnTriggerExit2D(Collider2D other)
   {

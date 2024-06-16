@@ -6,6 +6,8 @@ using UnityEngine;
 public class Barrier : MonoBehaviour
 {
     [SerializeField] private bool disableColorChange = false;
+    [SerializeField] private Color openColor;
+    [SerializeField] private Color closedColor;
     
     private BoxCollider2D _collider2D;
     private SpriteRenderer _sprite;
@@ -16,7 +18,6 @@ public class Barrier : MonoBehaviour
         _sprite = GetComponent<SpriteRenderer>();
     }
     
-    // Blue means the player can pass through the barrier, yellow means they can't
     public void ToggleBarrier()
     {
         bool isTrigger = _collider2D.isTrigger;
@@ -25,7 +26,7 @@ public class Barrier : MonoBehaviour
 
         if (!disableColorChange)
         {
-            _sprite.color = isTrigger ?  Color.blue : Color.yellow;
+            _sprite.color = isTrigger ? openColor : closedColor;
         }
     }
 }

@@ -25,6 +25,8 @@ public class GameplayManager : MonoBehaviour
   [SerializeField] private Player Player1;
   [SerializeField] private Player Player2;
   public List<SceneToSceneLink> sceneLinks;
+  [SerializeField] private List<CollectibleScriptableObject> collectibles;
+
   public DoorManager currentRoomManager = null;
   bool inTransition = false;
 
@@ -91,6 +93,11 @@ public class GameplayManager : MonoBehaviour
 
   void HandleCheckpointActivated(Checkpoint checkpoint) =>
     latestCheckpoint = checkpoint;
+
+  public bool CompareCollectible(CollectibleScriptableObject collectible)
+  {
+    return collectibles.Contains(collectible);
+  }
 
   void OnDisable()
   {
