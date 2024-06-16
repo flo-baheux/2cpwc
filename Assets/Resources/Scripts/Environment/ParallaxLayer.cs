@@ -11,6 +11,11 @@ public class ParallaxLayer : MonoBehaviour
     _camera = Camera.main.transform;
   }
 
+  void Update()
+  {
+    if (_camera == null)
+      _camera = Camera.main.transform;
+  }
   void LateUpdate()
   {
     transform.position = Vector3.Scale(_camera.position, movementScale);

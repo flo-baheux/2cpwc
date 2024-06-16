@@ -12,7 +12,7 @@ public class PlayerJumpingState : PlayerState
     if (Player.IsGrounded() && Player.rigidBody.velocity.y <= 0.1f)
       return State.GROUNDED;
 
-    if (Player.controlsEnabled && Player.playerInputAsset.FindAction("Jump").WasReleasedThisFrame())
+    if (Player.controlsEnabled && Player.playerInput.actions["Jump"].WasReleasedThisFrame())
       Player.rigidBody.velocity = new Vector2(Player.rigidBody.velocity.x, -Player.fallSpeed);
 
     // Never fall faster than Player.fallSpeed
