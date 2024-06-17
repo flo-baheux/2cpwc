@@ -22,26 +22,23 @@ public class SceneDoorLink
 public class GameplayManager : MonoBehaviour
 {
   [SerializeField] private Checkpoint latestCheckpoint;
-  [SerializeField] private Player Player1;
-  [SerializeField] private Player Player2;
+  private Player Player1;
+  private Player Player2;
   public List<SceneToSceneLink> sceneLinks;
   [SerializeField] private List<CollectibleScriptableObject> collectibles;
 
   public DoorManager currentRoomManager = null;
   bool inTransition = false;
 
-  void Awake()
+  public void attachPlayer(Player player)
   {
-    DontDestroyOnLoad(gameObject);
-  }
+    if (player.playerAssignment == PlayerAssignment.Player1)
+      Player1 = player;
+    else
+      Player2 = player;
 
-  void OnEnable()
-  {
-    Player1.playerDeadState.OnEnter += HandlePlayerDeath;
-    Player1.OnCheckpointActivated += HandleCheckpointActivated;
-
-    Player2.playerDeadState.OnEnter += HandlePlayerDeath;
-    Player2.OnCheckpointActivated += HandleCheckpointActivated;
+    player.playerDeadState.OnEnter += HandlePlayerDeath;
+    player.OnCheckpointActivated += HandleCheckpointActivated;
   }
 
   public void RoomTransitionFrom(int doorId)
@@ -79,8 +76,7 @@ public class GameplayManager : MonoBehaviour
     int[] playerInstanceIds = { Player1.gameObject.GetInstanceID(), Player2.gameObject.GetInstanceID() };
     SceneManager.MoveGameObjectsToScene(new NativeArray<int>(playerInstanceIds, Allocator.Temp), SceneManager.GetSceneByName(sceneDoorLink.scene.name));
     SceneManager.UnloadSceneAsync(sceneBeforeTransition);
-
-    Vector2 exitPosition = currentRoomManager.GetRoomExitPosition(sceneDoorLink.doorId);
+    Vector2 exitPosition = currentRoomManager.GetDoorExitPosition(sceneDoorLink.doorId);
     Player1.transform.position = exitPosition;
     Player2.transform.position = exitPosition;
     inTransition = false;
@@ -97,14 +93,5 @@ public class GameplayManager : MonoBehaviour
   public bool CompareCollectible(CollectibleScriptableObject collectible)
   {
     return collectibles.Contains(collectible);
-  }
-
-  void OnDisable()
-  {
-    Player1.playerDeadState.OnEnter -= HandlePlayerDeath;
-    Player1.OnCheckpointActivated -= HandleCheckpointActivated;
-
-    Player2.playerDeadState.OnEnter -= HandlePlayerDeath;
-    Player2.OnCheckpointActivated -= HandleCheckpointActivated;
   }
 }

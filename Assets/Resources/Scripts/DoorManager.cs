@@ -7,7 +7,7 @@ public class DoorManager : MonoBehaviour
     GameObject.Find("GameplayManager").GetComponent<GameplayManager>().currentRoomManager = this;
   }
 
-  public Vector2 GetRoomExitPosition(int doorId)
+  public Vector2 GetDoorExitPosition(int doorId)
   {
 
     foreach (Transform child in transform)
