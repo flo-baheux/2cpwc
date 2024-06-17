@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
 
   void Start()
   {
-    GameObject.Find("GameplayManager").GetComponent<GameplayManager>().attachPlayer(this);
+    GameObject.Find("GameplayManager").GetComponent<GameplayManager>().AttachPlayer(this);
   }
 
   void Update()
@@ -80,17 +80,7 @@ public class Player : MonoBehaviour
     {
       float horizontalVelocity = horizontalInput * runningSpeed;
       if (horizontalVelocity != rigidBody.velocity.x)
-      {
-        if (horizontalInput > 0)
-        {
-          transform.GetChild(0).transform.rotation = (Quaternion.Euler(0, 90, 0));
-        }
-
-        else if (horizontalInput < 0)
-        {
-          transform.GetChild(0).transform.rotation = (Quaternion.Euler(0, -90, 0));
-        }
-      }
+        transform.GetChild(0).transform.rotation = Quaternion.Euler(0, horizontalInput > 0 ? 90 : -90, 0);
       rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
 
       //if (Input.GetKeyDown(KeyCode.LeftControl))

@@ -13,11 +13,11 @@ public class AutoTargetAllPlayers : MonoBehaviour
 
   void Update()
   {
-    if (targetGroup.m_Targets.Length == 0)
-    {
-      GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-      foreach (GameObject player in players)
-        targetGroup.AddMember(player.transform, 1, 0);
-    }
+    //   if (targetGroup.m_Targets.Length == 0)
+    //   {
+    //     GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+    //     foreach (GameObject player in players)
+    //       targetGroup.AddMember(player.transform, 1, 0);
+    //   }
   }
 }
