@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
 
   void Update()
   {
-    float horizontalInput = playerInputAsset.FindAction("Move").ReadValue<float>();
+    float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
     if (controlsEnabled)
     {
       float horizontalVelocity = horizontalInput * runningSpeed;
