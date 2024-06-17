@@ -195,6 +195,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6924850053725852333, guid: 61397e952516e4949bb98be8dc068d72, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924850053725852333, guid: 61397e952516e4949bb98be8dc068d72, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.88
+      objectReference: {fileID: 0}
     - target: {fileID: 8224067303307105696, guid: 61397e952516e4949bb98be8dc068d72, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.79199
