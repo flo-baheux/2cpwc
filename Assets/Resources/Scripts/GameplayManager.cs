@@ -96,7 +96,7 @@ public class GameplayManager : MonoBehaviour
   {
     SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(sceneName));
 
-    Vector2 exitPosition = currentRoomManager.GetDoorExitPosition(doorId);
+    Vector2 exitPosition = currentRoomManager.GetDoorExitPositionForPlayer(player.playerAssignment, doorId);
     player.transform.position = exitPosition;
   }
 
