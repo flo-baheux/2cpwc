@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
   [NonSerialized] public Rigidbody2D rigidBody;
   [NonSerialized] public PlayerInput playerInput;
   private CapsuleCollider2D capsuleCollider;
+  private Animator animator;
 
 
   public bool controlsEnabled = true;
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
     rigidBody = GetComponent<Rigidbody2D>();
     capsuleCollider = GetComponent<CapsuleCollider2D>();
     playerInput = GetComponent<PlayerInput>();
+    animator = GetComponent<Animator>();
     playerInput.actions["Interact"].performed += OnInteract;
 
     States = new Dictionary<State, PlayerState>() {
@@ -56,27 +58,52 @@ public class Player : MonoBehaviour
 
   void Update()
   {
+    float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
     if (controlsEnabled)
     {
-      float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
+      float horizontalVelocity = horizontalInput * runningSpeed;
+      if (horizontalVelocity != rigidBody.velocity.x)
+      {
+        if (horizontalInput > 0)
+        {
+          transform.GetChild(0).transform.rotation = (Quaternion.Euler(0, 90, 0));
+        }
 
-      float horizontalVelocity = horizontalInput * runningSpeed; ;
+        else if (horizontalInput < 0)
+        {
+          transform.GetChild(0).transform.rotation = (Quaternion.Euler(0, -90, 0));
+        }
+      }
       rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
-    }
 
+      //if (Input.GetKeyDown(KeyCode.LeftControl))
+      //  TransitionToState(State.DEAD);      
+    }
 
     State? newState = currentState.CustomUpdate();
     if (newState.HasValue)
       TransitionToState(newState.Value);
+
+    animator.SetFloat("HorizontalInput", Math.Abs(horizontalInput));
+    animator.SetFloat("VelocityY", rigidBody.velocity.y);
+    animator.SetBool("IsGrounded", currentState.state == State.GROUNDED);
+    animator.SetBool("IsCrouched", currentState.state == State.CROUCHING);
+    animator.SetBool("IsDead", currentState.state == State.DEAD);
   }
 
   public bool IsGrounded()
   {
     Vector2 center = new(capsuleCollider.bounds.center.x, capsuleCollider.bounds.min.y);
     Vector2 size = new(capsuleCollider.bounds.size.x + 0.2f, 0.05f);
-    RaycastHit2D raycastHit = Physics2D.BoxCast(center, size, 0f, Vector2.down, 1f, LayerMask.GetMask("Ground"));
+    RaycastHit2D raycastHit = Physics2D.BoxCast(center, size, 0f, Vector2.down, 0f, LayerMask.GetMask("Ground"));
     return raycastHit.collider;
   }
+
+  // // Debug IsGrounded box collider
+  // public void OnDrawGizmos()
+  // {
+  //   Gizmos.DrawCube(new Vector2(capsuleCollider.bounds.center.x, capsuleCollider.bounds.min.y), new Vector2(capsuleCollider.bounds.size.x + 0.2f, 0.05f));
+  // }
 
   public void TransitionToState(State newState)
   {
