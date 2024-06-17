@@ -10,11 +10,13 @@ public class Player : MonoBehaviour
     playerGroundedState = new PlayerGroundedState(this);
     playerJumpingState = new PlayerJumpingState(this);
     playerDeadState = new PlayerDeadState(this);
+    playerClimbingState = new PlayerClimbingState(this);
     health = new PlayerHealthComponent(this);
   }
   public PlayerGroundedState playerGroundedState;
   public PlayerJumpingState playerJumpingState;
   public PlayerDeadState playerDeadState;
+  public PlayerClimbingState playerClimbingState;
 
   public PlayerHealthComponent health;
 
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour
   public event Action<Checkpoint> OnCheckpointActivated;
 
   private Interactable _currentInteractable;
+  public GameObject Climbable;
 
 
   void Awake()
@@ -52,6 +55,7 @@ public class Player : MonoBehaviour
       {State.GROUNDED, playerGroundedState},
       {State.JUMPING, playerJumpingState},
       {State.DEAD, playerDeadState},
+      {State.CLIMBING, playerClimbingState}
     };
     currentState = States[State.GROUNDED];
   }
@@ -128,6 +132,9 @@ public class Player : MonoBehaviour
 
     if (other.CompareTag("Interactable"))
       _currentInteractable = other.GetComponent<Interactable>();
+
+    if (other.CompareTag("Climbable"))
+      Climbable = other.gameObject;
   }
 
   private void OnInteract(InputAction.CallbackContext context) =>
@@ -137,5 +144,8 @@ public class Player : MonoBehaviour
   {
     if (other.GetComponent<Interactable>() != null)
       _currentInteractable = null;
+
+    if (other.CompareTag("Climbable"))
+      Climbable = null;
   }
 }
