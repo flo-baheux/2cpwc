@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Unity.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,42 +16,54 @@ public class SceneToSceneLink
 [Serializable]
 public class SceneDoorLink
 {
-  public SceneAsset scene;
+  public string sceneName;
   public int doorId;
 }
 public class GameplayManager : MonoBehaviour
 {
-  [SerializeField] private Checkpoint latestCheckpoint;
-  [SerializeField] private Player Player1;
-  [SerializeField] private Player Player2;
-  public List<SceneToSceneLink> sceneLinks;
-  [SerializeField] private List<CollectibleScriptableObject> collectibles;
+  [SerializeField] private string sceneToLoadPlayersOnStart;
+  [SerializeField] private int doorToLoadPlayersOnStart;
 
-  public DoorManager currentRoomManager = null;
+  private Checkpoint latestCheckpoint;
+  [SerializeField] private List<SceneToSceneLink> sceneLinks;
+  [SerializeField] private List<CollectibleScriptableObject> collectibles;
+  [SerializeField] private CinemachineTargetGroup cameraTargetGroup;
+
+  public DoorManager currentRoomManager;
+
+  private Player Player1;
+  private Player Player2;
+
   bool inTransition = false;
 
-  void Awake()
+  public void Awake()
   {
-    DontDestroyOnLoad(gameObject);
+    AsyncOperation sceneLoading = SceneManager.LoadSceneAsync(sceneToLoadPlayersOnStart, LoadSceneMode.Additive);
+    sceneLoading.completed += (AsyncOperation scene) =>
+    {
+      SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoadPlayersOnStart));
+      currentRoomManager = FindObjectOfType<DoorManager>();
+    };
   }
 
-  void OnEnable()
+  public void AttachPlayer(Player player)
   {
-    Player1.playerDeadState.OnEnter += HandlePlayerDeath;
-    Player1.OnCheckpointActivated += HandleCheckpointActivated;
+    if (player.playerAssignment == PlayerAssignment.Player1)
+      Player1 = player;
+    else
+      Player2 = player;
 
-    Player2.playerDeadState.OnEnter += HandlePlayerDeath;
-    Player2.OnCheckpointActivated += HandleCheckpointActivated;
+    player.playerDeadState.OnEnter += HandlePlayerDeath;
+    player.OnCheckpointActivated += HandleCheckpointActivated;
+    MovePlayerToSceneAtDoor(player, sceneToLoadPlayersOnStart, doorToLoadPlayersOnStart);
   }
 
   public void RoomTransitionFrom(int doorId)
   {
     SceneDoorLink target = null;
     foreach (SceneToSceneLink sceneLink in sceneLinks)
-    {
-      if (sceneLink.from.scene.name == SceneManager.GetActiveScene().name && sceneLink.from.doorId == doorId)
+      if (sceneLink.from.sceneName == SceneManager.GetActiveScene().name && sceneLink.from.doorId == doorId)
         target = sceneLink.to;
-    }
 
     if (target == null)
     {
@@ -70,20 +82,30 @@ public class GameplayManager : MonoBehaviour
       inTransition = true;
     Scene sceneBeforeTransition = SceneManager.GetActiveScene();
 
-    AsyncOperation asyncLoadScene = SceneManager.LoadSceneAsync(sceneDoorLink.scene.name, LoadSceneMode.Additive);
+    AsyncOperation asyncLoadScene = SceneManager.LoadSceneAsync(sceneDoorLink.sceneName, LoadSceneMode.Additive);
     while (!asyncLoadScene.isDone)
       yield return null;
-
-    SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneDoorLink.scene.name));
-
-    int[] playerInstanceIds = { Player1.gameObject.GetInstanceID(), Player2.gameObject.GetInstanceID() };
-    SceneManager.MoveGameObjectsToScene(new NativeArray<int>(playerInstanceIds, Allocator.Temp), SceneManager.GetSceneByName(sceneDoorLink.scene.name));
+    SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneDoorLink.sceneName));
+    MovePlayersToSceneAtDoor(sceneDoorLink.sceneName, sceneDoorLink.doorId);
     SceneManager.UnloadSceneAsync(sceneBeforeTransition);
 
-    Vector2 exitPosition = currentRoomManager.GetRoomExitPosition(sceneDoorLink.doorId);
-    Player1.transform.position = exitPosition;
-    Player2.transform.position = exitPosition;
     inTransition = false;
+  }
+
+  void MovePlayerToSceneAtDoor(Player player, string sceneName, int doorId)
+  {
+    SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(sceneName));
+
+    Vector2 exitPosition = currentRoomManager.GetDoorExitPosition(doorId);
+    player.transform.position = exitPosition;
+  }
+
+  void MovePlayersToSceneAtDoor(string sceneName, int doorId)
+  {
+    if (Player1)
+      MovePlayerToSceneAtDoor(Player1, sceneName, doorId);
+    if (Player2)
+      MovePlayerToSceneAtDoor(Player2, sceneName, doorId);
   }
 
   void HandlePlayerDeath(Player player)
@@ -97,14 +119,5 @@ public class GameplayManager : MonoBehaviour
   public bool CompareCollectible(CollectibleScriptableObject collectible)
   {
     return collectibles.Contains(collectible);
-  }
-
-  void OnDisable()
-  {
-    Player1.playerDeadState.OnEnter -= HandlePlayerDeath;
-    Player1.OnCheckpointActivated -= HandleCheckpointActivated;
-
-    Player2.playerDeadState.OnEnter -= HandlePlayerDeath;
-    Player2.OnCheckpointActivated -= HandleCheckpointActivated;
   }
 }

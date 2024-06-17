@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PlayerAssignment
+{
+  Player1,
+  Player2,
+};
+
 public class Player : MonoBehaviour
 {
+  public PlayerAssignment playerAssignment;
+
   Player()
   {
     playerGroundedState = new PlayerGroundedState(this);
@@ -43,12 +51,15 @@ public class Player : MonoBehaviour
   public GameObject Climbable;
 
 
+  public event Action<Player> OnWhatever;
+
   void Awake()
   {
     rigidBody = GetComponent<Rigidbody2D>();
     capsuleCollider = GetComponent<CapsuleCollider2D>();
     playerInput = GetComponent<PlayerInput>();
     animator = GetComponent<Animator>();
+    playerInput.SwitchCurrentActionMap(playerAssignment == PlayerAssignment.Player1 ? "Player1" : "Player2");
     playerInput.actions["Interact"].performed += OnInteract;
 
     States = new Dictionary<State, PlayerState>() {
@@ -60,24 +71,20 @@ public class Player : MonoBehaviour
     currentState = States[State.GROUNDED];
   }
 
+  void Start()
+  {
+    GameObject.Find("GameplayManager").GetComponent<GameplayManager>().AttachPlayer(this);
+  }
+
   void Update()
   {
+    OnWhatever?.Invoke(this);
     float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
     if (controlsEnabled)
     {
       float horizontalVelocity = horizontalInput * runningSpeed;
       if (horizontalVelocity != rigidBody.velocity.x)
-      {
-        if (horizontalInput > 0)
-        {
-          transform.GetChild(0).transform.rotation = (Quaternion.Euler(0, 90, 0));
-        }
-
-        else if (horizontalInput < 0)
-        {
-          transform.GetChild(0).transform.rotation = (Quaternion.Euler(0, -90, 0));
-        }
-      }
+        transform.GetChild(0).transform.rotation = Quaternion.Euler(0, horizontalInput > 0 ? 90 : -90, 0);
       rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
 
       //if (Input.GetKeyDown(KeyCode.LeftControl))
