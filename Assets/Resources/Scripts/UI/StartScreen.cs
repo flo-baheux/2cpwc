@@ -35,6 +35,14 @@ public class StartScreen : MonoBehaviour
     gameObject.SetActive(false);
   }
 
+  public void OnClickResume()
+  {
+    GameplayManager gameplayManager = GameObject.Find("GameplayManager").GetComponent<GameplayManager>();
+    if (!gameplayManager)
+      return;
+    gameplayManager.PauseResumeGame();
+  }
+
   public void OnClickQuitGame()
   {
 #if UNITY_EDITOR

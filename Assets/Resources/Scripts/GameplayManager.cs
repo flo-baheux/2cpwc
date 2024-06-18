@@ -35,6 +35,7 @@ public class GameplayManager : MonoBehaviour
   private Player Player2;
 
   bool inTransition = false;
+  bool gamePaused = false;
 
   public void Awake()
   {
@@ -119,5 +120,28 @@ public class GameplayManager : MonoBehaviour
   public bool CompareCollectible(CollectibleScriptableObject collectible)
   {
     return collectibles.Contains(collectible);
+  }
+
+  public void PauseResumeGame()
+  {
+    if (!gamePaused)
+    {
+      Time.timeScale = 0;
+      Player1.controlsEnabled = false;
+      Player2.controlsEnabled = false;
+      SceneManager.LoadScene("IngameMenu", LoadSceneMode.Additive);
+      gamePaused = true;
+    }
+    else
+    {
+      AsyncOperation op = SceneManager.UnloadSceneAsync("IngameMenu");
+      op.completed += (AsyncOperation _) =>
+      {
+        Time.timeScale = 1;
+        Player1.controlsEnabled = false;
+        Player2.controlsEnabled = false;
+        gamePaused = false;
+      };
+    }
   }
 }
