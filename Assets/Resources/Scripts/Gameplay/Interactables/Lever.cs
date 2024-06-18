@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Lever : MonoBehaviour, Interactable
 {
-    [SerializeField] private List<Barrier> barriers;
+  [SerializeField] private List<Barrier> barriers;
 
-    public void Interact(Player player)
+  public void Interact(Player player)
+  {
+    foreach (Barrier barrier in barriers)
     {
-        Debug.Log("Interacting with lever");
-
-        foreach (Barrier barrier in barriers)
-        {
-            barrier.ToggleBarrier();
-        }
+      barrier.ToggleBarrier();
     }
+  }
 }

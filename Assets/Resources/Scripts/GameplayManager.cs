@@ -124,7 +124,14 @@ public class GameplayManager : MonoBehaviour
 
   void HandlePlayerDeath(Player player)
   {
-    player.RespawnToPosition(latestCheckpoint.transform.position);
+    StartCoroutine(RespawnAfter3Secs());
+  }
+
+  IEnumerator RespawnAfter3Secs()
+  {
+    yield return new WaitForSeconds(3);
+    Player1.RespawnToPosition(latestCheckpoint.transform.position);
+    Player2.RespawnToPosition(latestCheckpoint.transform.position);
   }
 
   void HandleCheckpointActivated(Checkpoint checkpoint) =>
