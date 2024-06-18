@@ -17,18 +17,18 @@ public class PlayerJumpingState : PlayerState
 
     // Never fall faster than Player.fallSpeed
     Player.rigidBody.velocity = new Vector2(Player.rigidBody.velocity.x, Mathf.Max(Player.rigidBody.velocity.y, -Player.fallSpeed));
-    
+
     // This part is for the climbing mechanic
     if (Player.controlsEnabled && Player.playerInput.actions["Crouch"].WasPressedThisFrame())
     {
-      Debug.Log("Reaches this part");
+      Debug.Log("Climb");
 
       if (Player.Climbable != null)
       {
         return State.CLIMBING;
       }
     }
-    
+
     return null;
   }
 }

@@ -21,9 +21,9 @@ public class SettingsScreen : MonoBehaviour
 
   void Start()
   {
-    // GlobalVolumeSlider.value = PlayerPrefs.HasKey("GlobalVolume") ? PlayerPrefs.GetFloat("GlobalVolume") : PlayerPrefsApplier.defaultGlobalVolume;
-    // BGMVolumeSlider.value = PlayerPrefs.HasKey("BGMVolume") ? PlayerPrefs.GetFloat("BGMVolume") : PlayerPrefsApplier.defaultBGMVolume;
-    // SFXVolumeSlider.value = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : PlayerPrefsApplier.defaultSFXVolume;
+    GlobalVolumeSlider.value = PlayerPrefs.HasKey("GlobalVolume") ? PlayerPrefs.GetFloat("GlobalVolume") : PlayerPrefsApplier.defaultGlobalVolume;
+    BGMVolumeSlider.value = PlayerPrefs.HasKey("BGMVolume") ? PlayerPrefs.GetFloat("BGMVolume") : PlayerPrefsApplier.defaultBGMVolume;
+    SFXVolumeSlider.value = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : PlayerPrefsApplier.defaultSFXVolume;
   }
 
 
