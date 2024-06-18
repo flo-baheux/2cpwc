@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,32 +30,41 @@ public class GameplayManager : MonoBehaviour
 
   public DoorManager currentRoomManager;
 
-  private Player Player1;
-  private Player Player2;
+  [SerializeField] private Player Player1;
+  [SerializeField] private Player Player2;
 
   bool inTransition = false;
   bool gamePaused = false;
 
+  private GameAudioController audioController;
+
   public void Awake()
   {
+    SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+
+    audioController = GetComponent<GameAudioController>();
+    audioController.PlayDefaultAmbiantSounds();
+  }
+
+  public void LoadGameFromMainMenu()
+  {
+    SceneManager.UnloadSceneAsync("MainMenu");
     AsyncOperation sceneLoading = SceneManager.LoadSceneAsync(sceneToLoadPlayersOnStart, LoadSceneMode.Additive);
     sceneLoading.completed += (AsyncOperation scene) =>
     {
+      audioController.PlayForestBGM();
       SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoadPlayersOnStart));
       currentRoomManager = FindObjectOfType<DoorManager>();
+
+      Player1.SetPlayerAssignment(PlayerAssignment.Player1);
+      Player1.playerDeadState.OnEnter += HandlePlayerDeath;
+      Player1.OnCheckpointActivated += HandleCheckpointActivated;
+
+      Player2.SetPlayerAssignment(PlayerAssignment.Player2);
+      Player2.playerDeadState.OnEnter += HandlePlayerDeath;
+      Player2.OnCheckpointActivated += HandleCheckpointActivated;
+      MovePlayersToSceneAtDoor(sceneToLoadPlayersOnStart, doorToLoadPlayersOnStart);
     };
-  }
-
-  public void AttachPlayer(Player player)
-  {
-    if (player.playerAssignment == PlayerAssignment.Player1)
-      Player1 = player;
-    else
-      Player2 = player;
-
-    player.playerDeadState.OnEnter += HandlePlayerDeath;
-    player.OnCheckpointActivated += HandleCheckpointActivated;
-    MovePlayerToSceneAtDoor(player, sceneToLoadPlayersOnStart, doorToLoadPlayersOnStart);
   }
 
   public void RoomTransitionFrom(int doorId)

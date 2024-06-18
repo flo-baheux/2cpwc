@@ -11,7 +11,7 @@ public enum PlayerAssignment
 
 public class Player : MonoBehaviour
 {
-  public PlayerAssignment playerAssignment;
+  public PlayerAssignment playerAssignment { get; private set; }
 
   Player()
   {
@@ -41,14 +41,9 @@ public class Player : MonoBehaviour
 
   public PlayerState currentState;
 
-
   public bool controlsEnabled = true;
-
   private Dictionary<State, PlayerState> States;
-
-
   public event Action<Checkpoint> OnCheckpointActivated;
-
   private Interactable _currentInteractable;
   public GameObject Climbable;
 
@@ -58,8 +53,7 @@ public class Player : MonoBehaviour
     capsuleCollider = GetComponent<CapsuleCollider2D>();
     playerInput = GetComponent<PlayerInput>();
     animator = GetComponent<Animator>();
-    gameplayManager = GameObject.Find("GameplayManager").GetComponent<GameplayManager>();
-    playerInput.SwitchCurrentActionMap(playerAssignment == PlayerAssignment.Player1 ? "Player1" : "Player2");
+    gameplayManager = GameObject.Find("GameManager").GetComponent<GameplayManager>();
     playerInput.actions["Interact"].performed += OnInteract;
 
     States = new Dictionary<State, PlayerState>() {
@@ -71,9 +65,10 @@ public class Player : MonoBehaviour
     currentState = States[State.GROUNDED];
   }
 
-  void Start()
+  public void SetPlayerAssignment(PlayerAssignment pa)
   {
-    gameplayManager.AttachPlayer(this);
+    playerAssignment = pa;
+    playerInput.SwitchCurrentActionMap(playerAssignment == PlayerAssignment.Player1 ? "Player1" : "Player2");
   }
 
   void Update()

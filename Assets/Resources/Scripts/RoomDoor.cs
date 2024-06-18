@@ -8,6 +8,6 @@ public class RoomDoor : MonoBehaviour, Interactable
 
   public void Interact(Player player)
   {
-    GameObject.Find("GameplayManager").GetComponent<GameplayManager>().RoomTransitionFrom(id);
+    GameObject.Find("GameManager").GetComponent<GameplayManager>().RoomTransitionFrom(id);
   }
 }

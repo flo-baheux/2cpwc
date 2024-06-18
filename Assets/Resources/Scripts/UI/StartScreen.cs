@@ -20,7 +20,10 @@ public class StartScreen : MonoBehaviour
 
   public void OnClickPlay()
   {
-    SceneManager.LoadScene("MasterScene");
+    GameplayManager gameplayManager = GameObject.Find("GameManager").GetComponent<GameplayManager>();
+    if (!gameplayManager)
+      return;
+    gameplayManager.LoadGameFromMainMenu();
   }
 
   public void OnClickSettingsScreen()
@@ -37,7 +40,7 @@ public class StartScreen : MonoBehaviour
 
   public void OnClickResume()
   {
-    GameplayManager gameplayManager = GameObject.Find("GameplayManager").GetComponent<GameplayManager>();
+    GameplayManager gameplayManager = GameObject.Find("GameManager").GetComponent<GameplayManager>();
     if (!gameplayManager)
       return;
     gameplayManager.PauseResumeGame();

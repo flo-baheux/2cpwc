@@ -4,7 +4,7 @@ public class DoorManager : MonoBehaviour
 {
   public void Start()
   {
-    GameObject.Find("GameplayManager").GetComponent<GameplayManager>().currentRoomManager = this;
+    GameObject.Find("GameManager").GetComponent<GameplayManager>().currentRoomManager = this;
   }
 
   public Vector2 GetDoorExitPositionForPlayer(PlayerAssignment playerAssignment, int doorId)
