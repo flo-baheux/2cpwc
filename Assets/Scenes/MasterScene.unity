@@ -471,45 +471,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636546b905ec4d442bda64dfd90c7536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoadPlayersOnStart: Level1
+  sceneToLoadPlayersOnStart: Level2
   doorToLoadPlayersOnStart: 0
   sceneLinks:
   - from:
-      sceneName: StartRoom
-      doorId: 0
-    to:
-      sceneName: SecondRoom
-      doorId: 0
-  - from:
-      sceneName: StartRoom
+      sceneName: Level1
       doorId: 1
     to:
-      sceneName: SecondRoom
-      doorId: 1
-  - from:
-      sceneName: StartRoom
-      doorId: 2
-    to:
-      sceneName: SecondRoom
-      doorId: 2
-  - from:
-      sceneName: SecondRoom
-      doorId: 0
-    to:
-      sceneName: StartRoom
+      sceneName: Level2
       doorId: 0
   - from:
-      sceneName: SecondRoom
+      sceneName: Level2
       doorId: 1
     to:
-      sceneName: StartRoom
-      doorId: 1
+      sceneName: Level3
+      doorId: 0
   - from:
-      sceneName: SecondRoom
-      doorId: 2
+      sceneName: Level3
+      doorId: 1
     to:
-      sceneName: StartRoom
-      doorId: 2
+      sceneName: Level4
+      doorId: 0
   collectibles: []
   cameraTargetGroup: {fileID: 1642690680}
   currentRoomManager: {fileID: 0}
