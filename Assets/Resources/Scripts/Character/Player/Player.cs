@@ -37,21 +37,20 @@ public class Player : MonoBehaviour
   [NonSerialized] public PlayerInput playerInput;
   private CapsuleCollider2D capsuleCollider;
   private Animator animator;
+  private GameplayManager gameplayManager;
+
+  public PlayerState currentState;
 
 
   public bool controlsEnabled = true;
 
   private Dictionary<State, PlayerState> States;
 
-  public PlayerState currentState;
 
   public event Action<Checkpoint> OnCheckpointActivated;
 
   private Interactable _currentInteractable;
   public GameObject Climbable;
-
-
-  public event Action<Player> OnWhatever;
 
   void Awake()
   {
@@ -59,6 +58,7 @@ public class Player : MonoBehaviour
     capsuleCollider = GetComponent<CapsuleCollider2D>();
     playerInput = GetComponent<PlayerInput>();
     animator = GetComponent<Animator>();
+    gameplayManager = GameObject.Find("GameplayManager").GetComponent<GameplayManager>();
     playerInput.SwitchCurrentActionMap(playerAssignment == PlayerAssignment.Player1 ? "Player1" : "Player2");
     playerInput.actions["Interact"].performed += OnInteract;
 
@@ -73,12 +73,11 @@ public class Player : MonoBehaviour
 
   void Start()
   {
-    GameObject.Find("GameplayManager").GetComponent<GameplayManager>().AttachPlayer(this);
+    gameplayManager.AttachPlayer(this);
   }
 
   void Update()
   {
-    OnWhatever?.Invoke(this);
     float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
     if (controlsEnabled)
     {
@@ -100,6 +99,8 @@ public class Player : MonoBehaviour
     animator.SetBool("IsGrounded", currentState.state == State.GROUNDED);
     animator.SetBool("IsCrouched", currentState.state == State.CROUCHING);
     animator.SetBool("IsDead", currentState.state == State.DEAD);
+    if (playerInput.actions["Pause"].WasPressedThisFrame())
+      gameplayManager.PauseResumeGame();
   }
 
   public bool IsGrounded()
