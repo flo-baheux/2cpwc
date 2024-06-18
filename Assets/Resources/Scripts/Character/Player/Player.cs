@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -74,6 +75,7 @@ public class Player : MonoBehaviour
   void Start()
   {
     GameObject.Find("GameplayManager").GetComponent<GameplayManager>().AttachPlayer(this);
+    // StartCoroutine(PlayStretchAnimationGroundedFor5Secs());
   }
 
   void Update()
@@ -154,5 +156,21 @@ public class Player : MonoBehaviour
 
     if (other.CompareTag("Climbable"))
       Climbable = null;
+  }
+
+  IEnumerator PlayStretchAnimationGroundedFor5Secs()
+  {
+    while (true)
+    {
+      if (currentState.state == State.GROUNDED)
+      {
+        yield return new WaitForSecondsRealtime(5);
+        if (currentState.state == State.GROUNDED)
+        {
+          // Debug.Log("Running stretch anim");
+          // animator.Play("Stretch");
+        }
+      }
+    }
   }
 }
