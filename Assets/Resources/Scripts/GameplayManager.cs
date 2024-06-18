@@ -40,17 +40,17 @@ public class GameplayManager : MonoBehaviour
 
   public void Awake()
   {
-    SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
-
-    audioController = GetComponent<GameAudioController>();
-    audioController.PlayDefaultAmbiantSounds();
+    SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive).completed += (AsyncOperation sceneLoad) =>
+    {
+      audioController = GetComponent<GameAudioController>();
+      audioController.PlayDefaultAmbiantSounds();
+    };
   }
 
   public void LoadGameFromMainMenu()
   {
     SceneManager.UnloadSceneAsync("MainMenu");
-    AsyncOperation sceneLoading = SceneManager.LoadSceneAsync(sceneToLoadPlayersOnStart, LoadSceneMode.Additive);
-    sceneLoading.completed += (AsyncOperation scene) =>
+    SceneManager.LoadSceneAsync(sceneToLoadPlayersOnStart, LoadSceneMode.Additive).completed += (AsyncOperation sceneLoad) =>
     {
       audioController.PlayForestBGM();
       SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoadPlayersOnStart));
@@ -64,6 +64,8 @@ public class GameplayManager : MonoBehaviour
       Player2.playerDeadState.OnEnter += HandlePlayerDeath;
       Player2.OnCheckpointActivated += HandleCheckpointActivated;
       MovePlayersToSceneAtDoor(sceneToLoadPlayersOnStart, doorToLoadPlayersOnStart);
+      cameraTargetGroup.AddMember(Player1.transform, 1, 0);
+      cameraTargetGroup.AddMember(Player2.transform, 1, 0);
     };
   }
 
