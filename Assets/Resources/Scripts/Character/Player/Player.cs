@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,12 +12,6 @@ public enum PlayerAssignment
 
 public class Player : MonoBehaviour
 {
-  private enum Direction
-  {
-    Left,
-    Right
-  }
-
   Player()
   {
     playerGroundedState = new PlayerGroundedState(this);
@@ -27,13 +22,12 @@ public class Player : MonoBehaviour
   }
 
   public PlayerAssignment playerAssignment { get; private set; }
+  public PlayerHealthComponent health { get; private set; }
 
-  public PlayerGroundedState playerGroundedState;
-  public PlayerJumpingState playerJumpingState;
-  public PlayerDeadState playerDeadState;
-  public PlayerClimbingState playerClimbingState;
-
-  public PlayerHealthComponent health;
+  public PlayerGroundedState playerGroundedState { get; private set; }
+  public PlayerJumpingState playerJumpingState { get; private set; }
+  public PlayerDeadState playerDeadState { get; private set; }
+  public PlayerClimbingState playerClimbingState { get; private set; }
 
   // Movement parameters
   public float jumpHeight = 10f;
@@ -56,7 +50,11 @@ public class Player : MonoBehaviour
 
   private Interactable _currentInteractable;
   public GameObject Climbable;
-  private Direction facingDirection = Direction.Right;
+
+  private bool facingRight = true;
+
+  [SerializeField] public readonly int damageInvulnSecondsDuration = 1;
+  public bool isInvulnerable { get; private set; }
 
   void Awake()
   {
@@ -74,6 +72,8 @@ public class Player : MonoBehaviour
       {State.CLIMBING, playerClimbingState}
     };
     currentState = States[State.GROUNDED];
+
+    health.PlayerHealthChanged += OnHealthChange;
   }
 
   public void SetPlayerAssignment(PlayerAssignment pa)
@@ -88,14 +88,14 @@ public class Player : MonoBehaviour
     if (controlsEnabled)
     {
       if (horizontalInput > 0)
-        facingDirection = Direction.Right;
+        facingRight = true;
       else if (horizontalInput < 0)
-        facingDirection = Direction.Left;
+        facingRight = false;
       float horizontalVelocity = horizontalInput * runningSpeed;
       rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
     }
 
-    transform.GetChild(0).transform.rotation = Quaternion.Euler(0, facingDirection == Direction.Right ? 90 : -90, 0);
+    transform.GetChild(0).transform.rotation = Quaternion.Euler(0, facingRight ? 90 : -90, 0);
 
     State? newState = currentState.CustomUpdate();
     if (newState.HasValue)
@@ -136,8 +136,8 @@ public class Player : MonoBehaviour
     rigidBody.position = Checkpoint;
     TransitionToState(State.GROUNDED);
 
-    // Reset player health
-    // Re-enable controls after X time
+    health.ResetHealth();
+    controlsEnabled = true;
   }
 
   public void OnTriggerEnter2D(Collider2D other)
@@ -168,4 +168,17 @@ public class Player : MonoBehaviour
   }
 
   public bool canInteractWithSomething() => _currentInteractable != null;
+
+  public void OnHealthChange(int hpBefore, int hpAfter)
+  {
+    if (hpAfter < hpBefore && hpAfter > 0)
+      StartCoroutine(InvulnerabilityCoroutine());
+  }
+
+  IEnumerator InvulnerabilityCoroutine()
+  {
+    isInvulnerable = true;
+    yield return new WaitForSecondsRealtime(damageInvulnSecondsDuration);
+    isInvulnerable = false;
+  }
 }
