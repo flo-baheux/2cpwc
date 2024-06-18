@@ -422,7 +422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4567265275079962871, guid: bda94a5029a698446b26e13052a359b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: StartScreen, Assembly-CSharp
+      value: PauseScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4567265275079962871, guid: bda94a5029a698446b26e13052a359b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -442,6 +442,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1069961355056520288, guid: bda94a5029a698446b26e13052a359b0, type: 3}
   m_PrefabInstance: {fileID: 327556502}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &327556504 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4567265275079962871, guid: bda94a5029a698446b26e13052a359b0, type: 3}
+  m_PrefabInstance: {fileID: 327556502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &350516198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,12 +1064,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 781335361}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d2d2f46b734c4747b25ae8d128bacb4, type: 3}
+  m_Script: {fileID: 11500000, guid: af01d023dcdc64841a935fc209e061ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayButton: {fileID: 0}
+  ResumeButton: {fileID: 327556504}
   settingsScreen: {fileID: 2110048631}
-  creditsScreen: {fileID: 0}
 --- !u!1001 &810895278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1521,7 +1531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4567265275079962871, guid: bda94a5029a698446b26e13052a359b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: StartScreen, Assembly-CSharp
+      value: PauseScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4567265275079962871, guid: bda94a5029a698446b26e13052a359b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1750,7 +1760,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4567265275079962871, guid: bda94a5029a698446b26e13052a359b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: StartScreen, Assembly-CSharp
+      value: PauseScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4567265275079962871, guid: bda94a5029a698446b26e13052a359b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

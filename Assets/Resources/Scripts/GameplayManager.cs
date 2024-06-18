@@ -56,13 +56,16 @@ public class GameplayManager : MonoBehaviour
       SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoadPlayersOnStart));
       currentRoomManager = FindObjectOfType<DoorManager>();
 
+      Player1.gameObject.SetActive(true);
       Player1.SetPlayerAssignment(PlayerAssignment.Player1);
       Player1.playerDeadState.OnEnter += HandlePlayerDeath;
       Player1.OnCheckpointActivated += HandleCheckpointActivated;
 
+      Player2.gameObject.SetActive(true);
       Player2.SetPlayerAssignment(PlayerAssignment.Player2);
       Player2.playerDeadState.OnEnter += HandlePlayerDeath;
       Player2.OnCheckpointActivated += HandleCheckpointActivated;
+
       MovePlayersToSceneAtDoor(sceneToLoadPlayersOnStart, doorToLoadPlayersOnStart);
       cameraTargetGroup.AddMember(Player1.transform, 1, 0);
       cameraTargetGroup.AddMember(Player2.transform, 1, 0);
@@ -148,8 +151,8 @@ public class GameplayManager : MonoBehaviour
       op.completed += (AsyncOperation _) =>
       {
         Time.timeScale = 1;
-        Player1.controlsEnabled = false;
-        Player2.controlsEnabled = false;
+        Player1.controlsEnabled = true;
+        Player2.controlsEnabled = true;
         gamePaused = false;
       };
     }

@@ -11,7 +11,11 @@ public enum PlayerAssignment
 
 public class Player : MonoBehaviour
 {
-  public PlayerAssignment playerAssignment { get; private set; }
+  private enum Direction
+  {
+    Left,
+    Right
+  }
 
   Player()
   {
@@ -21,6 +25,9 @@ public class Player : MonoBehaviour
     playerClimbingState = new PlayerClimbingState(this);
     health = new PlayerHealthComponent(this);
   }
+
+  public PlayerAssignment playerAssignment { get; private set; }
+
   public PlayerGroundedState playerGroundedState;
   public PlayerJumpingState playerJumpingState;
   public PlayerDeadState playerDeadState;
@@ -43,9 +50,13 @@ public class Player : MonoBehaviour
 
   public bool controlsEnabled = true;
   private Dictionary<State, PlayerState> States;
+
   public event Action<Checkpoint> OnCheckpointActivated;
+  public event Action<Player> OnInteract;
+
   private Interactable _currentInteractable;
   public GameObject Climbable;
+  private Direction facingDirection = Direction.Right;
 
   void Awake()
   {
@@ -54,7 +65,7 @@ public class Player : MonoBehaviour
     playerInput = GetComponent<PlayerInput>();
     animator = GetComponent<Animator>();
     gameplayManager = GameObject.Find("GameManager").GetComponent<GameplayManager>();
-    playerInput.actions["Interact"].performed += OnInteract;
+    playerInput.actions["Interact"].performed += Interact;
 
     States = new Dictionary<State, PlayerState>() {
       {State.GROUNDED, playerGroundedState},
@@ -76,14 +87,15 @@ public class Player : MonoBehaviour
     float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
     if (controlsEnabled)
     {
+      if (horizontalInput > 0)
+        facingDirection = Direction.Right;
+      else if (horizontalInput < 0)
+        facingDirection = Direction.Left;
       float horizontalVelocity = horizontalInput * runningSpeed;
-      if (horizontalVelocity != rigidBody.velocity.x)
-        transform.GetChild(0).transform.rotation = Quaternion.Euler(0, horizontalInput > 0 ? 90 : -90, 0);
       rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
-
-      //if (Input.GetKeyDown(KeyCode.LeftControl))
-      //  TransitionToState(State.DEAD);      
     }
+
+    transform.GetChild(0).transform.rotation = Quaternion.Euler(0, facingDirection == Direction.Right ? 90 : -90, 0);
 
     State? newState = currentState.CustomUpdate();
     if (newState.HasValue)
@@ -140,8 +152,11 @@ public class Player : MonoBehaviour
       Climbable = other.gameObject;
   }
 
-  private void OnInteract(InputAction.CallbackContext context) =>
+  private void Interact(InputAction.CallbackContext context)
+  {
+    OnInteract?.Invoke(this);
     _currentInteractable?.Interact(this);
+  }
 
   private void OnTriggerExit2D(Collider2D other)
   {
@@ -151,4 +166,6 @@ public class Player : MonoBehaviour
     if (other.CompareTag("Climbable"))
       Climbable = null;
   }
+
+  public bool canInteractWithSomething() => _currentInteractable != null;
 }

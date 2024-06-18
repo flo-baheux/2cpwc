@@ -452,6 +452,7 @@ GameObject:
   - component: {fileID: 1227179007}
   - component: {fileID: 1227179006}
   - component: {fileID: 1227179008}
+  - component: {fileID: 1227179009}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -542,7 +543,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -9147745842697283976, guid: 634e877eb8d3fda4ca188d861fa2a783, type: 2}
   m_audioClip: {fileID: 8300000, guid: 8fe64d9b8b56bf846acb67ba84b2c733, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.65
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -638,7 +639,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -1350096762207983751, guid: 634e877eb8d3fda4ca188d861fa2a783, type: 2}
   m_audioClip: {fileID: 8300000, guid: cb32923f4effd56479720555f1121c6f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -739,6 +740,19 @@ MonoBehaviour:
   defaultAmbiantSounds: {fileID: 8300000, guid: 8fe64d9b8b56bf846acb67ba84b2c733, type: 3}
   maxBGMvolume: 1
   maxSFXvolume: 1
+--- !u!114 &1227179009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227179003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 103c164f7ff0b534d8174dd54d656b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 634e877eb8d3fda4ca188d861fa2a783, type: 2}
 --- !u!114 &1343481086 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5578078348972161490, guid: ae62931ad5d9af34390c0e57f6791ff8, type: 3}
