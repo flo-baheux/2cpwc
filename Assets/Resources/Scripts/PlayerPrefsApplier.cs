@@ -26,6 +26,11 @@ public class PlayerPrefsApplier : MonoBehaviour
       mixer.SetFloat("SFXVolume", Mathf.Log10(PlayerPrefs.GetFloat("SFXVolume")) * 20);
     else
       mixer.SetFloat("SFXVolume", Mathf.Log10(defaultSFXVolume) * 20);
+
+    if (PlayerPrefs.HasKey("NarrationVolume"))
+      mixer.SetFloat("NarrationVolume", Mathf.Log10(PlayerPrefs.GetFloat("NarrationVolume")) * 20);
+    else
+      mixer.SetFloat("NarrationVolume", Mathf.Log10(defaultSFXVolume) * 20);
   }
 }
 

@@ -37,6 +37,7 @@ public class GameplayManager : MonoBehaviour
   bool gamePaused = false;
 
   private GameAudioController audioController;
+  [SerializeField] private CinemachineVirtualCamera narrationCamera;
 
   public void Awake()
   {
@@ -163,5 +164,21 @@ public class GameplayManager : MonoBehaviour
         gamePaused = false;
       };
     }
+  }
+
+  public IEnumerator TriggerNarrationCutsceneCoroutine(GameObject narrationTarget, AudioClip audioNarration)
+  {
+    narrationTarget.SetActive(true);
+    narrationCamera.Follow = narrationTarget.transform;
+    narrationCamera.LookAt = narrationTarget.transform;
+    Player1.controlsEnabled = false;
+    Player2.controlsEnabled = false;
+    narrationCamera.gameObject.SetActive(true);
+    audioController.NarrationSource.PlayOneShot(audioNarration);
+    yield return new WaitForSecondsRealtime(audioNarration.length + 1);
+    narrationCamera.gameObject.SetActive(false);
+    narrationTarget.SetActive(false);
+    Player1.controlsEnabled = true;
+    Player2.controlsEnabled = true;
   }
 }
