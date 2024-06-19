@@ -51,8 +51,10 @@ public class GameplayManager : MonoBehaviour
   public void LoadGameFromMainMenu()
   {
     SceneManager.UnloadSceneAsync("MainMenu");
+
     SceneManager.LoadSceneAsync(sceneToLoadPlayersOnStart, LoadSceneMode.Additive).completed += (AsyncOperation sceneLoad) =>
     {
+      SceneManager.LoadScene("IngameHUD", LoadSceneMode.Additive);
       audioController.PlayForestBGM();
       SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoadPlayersOnStart));
       currentRoomManager = FindObjectOfType<DoorManager>();
@@ -135,8 +137,11 @@ public class GameplayManager : MonoBehaviour
     Player2.RespawnToPosition(latestCheckpoint.transform.position);
   }
 
-  void HandleCheckpointActivated(Checkpoint checkpoint) =>
+  void HandleCheckpointActivated(Checkpoint checkpoint)
+  {
+    // FindObjectOfType<HUD>().DisplayMessage("Checkpoint activated!");
     latestCheckpoint = checkpoint;
+  }
 
   public bool CompareCollectible(CollectibleScriptableObject collectible)
   {
@@ -145,25 +150,26 @@ public class GameplayManager : MonoBehaviour
 
   public void PauseResumeGame()
   {
+    Debug.Log("PauseResume called - " + gamePaused);
     if (!gamePaused)
     {
       Time.timeScale = 0;
       Player1.controlsEnabled = false;
       Player2.controlsEnabled = false;
       SceneManager.LoadScene("IngameMenu", LoadSceneMode.Additive);
-      gamePaused = true;
     }
     else
     {
       AsyncOperation op = SceneManager.UnloadSceneAsync("IngameMenu");
+      Debug.Log(op);
       op.completed += (AsyncOperation _) =>
       {
         Time.timeScale = 1;
         Player1.controlsEnabled = true;
         Player2.controlsEnabled = true;
-        gamePaused = false;
       };
     }
+    gamePaused = !gamePaused;
   }
 
   public IEnumerator TriggerNarrationCutsceneCoroutine(GameObject narrationTarget, AudioClip audioNarration)

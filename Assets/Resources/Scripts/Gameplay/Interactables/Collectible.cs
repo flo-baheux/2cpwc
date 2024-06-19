@@ -19,6 +19,7 @@ public class Collectible : MonoBehaviour, Interactable
         if (FindObjectOfType<GameplayManager>().CompareCollectible(collectibleScriptableObject))
         {
             Debug.Log("Found collectible in list");
+            FindObjectOfType<HUD>().DisplayMessage($"A collectible has been found!");
             collectibleScriptableObject.collected = true;
             gameObject.SetActive(false);
             return;

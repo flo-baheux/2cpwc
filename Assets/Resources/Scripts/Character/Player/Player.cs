@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
   public event Action<Checkpoint> OnCheckpointActivated;
   public event Action<Player> OnInteract;
 
+  public event Action<PlayerAssignment, bool> OnInteractionDetected;
   private Interactable _currentInteractable;
   public GameObject Climbable;
 
@@ -146,7 +147,10 @@ public class Player : MonoBehaviour
       OnCheckpointActivated?.Invoke(checkpoint);
 
     if (other.CompareTag("Interactable"))
+    {
       _currentInteractable = other.GetComponent<Interactable>();
+      OnInteractionDetected?.Invoke(playerAssignment, true);
+    }
 
     if (other.CompareTag("Climbable"))
       Climbable = other.gameObject;
@@ -161,7 +165,10 @@ public class Player : MonoBehaviour
   private void OnTriggerExit2D(Collider2D other)
   {
     if (other.GetComponent<Interactable>() != null)
+    {
       _currentInteractable = null;
+      OnInteractionDetected?.Invoke(playerAssignment, false);
+    }
 
     if (other.CompareTag("Climbable"))
       Climbable = null;
