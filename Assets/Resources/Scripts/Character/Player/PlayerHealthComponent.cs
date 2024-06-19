@@ -7,25 +7,37 @@ public class PlayerHealthComponent
   public PlayerHealthComponent(Player player)
   {
     Player = player;
+    currentHealth = maxHealth;
   }
 
-  public int maxHealth = 9;
-  public int currentHealth = 0;
+  public int maxHealth { get; private set; } = 9;
+  public int currentHealth { get; private set; }
 
-  // Triggers when health is modified - parameter is current health after change
-  public event Action<int> PlayerHealthChanged;
+  public event Action<int, int> PlayerHealthChanged;
 
   public void AddHealth(int value)
   {
+    int healthBefore = currentHealth;
     currentHealth = Math.Clamp(currentHealth + value, 0, maxHealth);
-    PlayerHealthChanged?.Invoke(currentHealth);
+    PlayerHealthChanged?.Invoke(healthBefore, currentHealth);
   }
 
   public void ReduceHealth(int value)
   {
-    currentHealth = Math.Clamp(currentHealth - value, 0, maxHealth);
-    PlayerHealthChanged?.Invoke(currentHealth);
-    if (currentHealth == 0)
-      Player.TransitionToState(State.DEAD);
+    if (!Player.isInvulnerable)
+    {
+      int healthBefore = currentHealth;
+      currentHealth = Math.Clamp(currentHealth - value, 0, maxHealth);
+      PlayerHealthChanged?.Invoke(healthBefore, currentHealth);
+      if (currentHealth == 0)
+        Player.TransitionToState(State.DEAD);
+    }
+  }
+
+  public void ResetHealth()
+  {
+    int healthBefore = currentHealth;
+    currentHealth = maxHealth;
+    PlayerHealthChanged?.Invoke(healthBefore, currentHealth);
   }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,8 +12,6 @@ public enum PlayerAssignment
 
 public class Player : MonoBehaviour
 {
-  public PlayerAssignment playerAssignment { get; private set; }
-
   Player()
   {
     playerGroundedState = new PlayerGroundedState(this);
@@ -21,12 +20,14 @@ public class Player : MonoBehaviour
     playerClimbingState = new PlayerClimbingState(this);
     health = new PlayerHealthComponent(this);
   }
-  public PlayerGroundedState playerGroundedState;
-  public PlayerJumpingState playerJumpingState;
-  public PlayerDeadState playerDeadState;
-  public PlayerClimbingState playerClimbingState;
 
-  public PlayerHealthComponent health;
+  public PlayerAssignment playerAssignment { get; private set; }
+  public PlayerHealthComponent health { get; private set; }
+
+  public PlayerGroundedState playerGroundedState { get; private set; }
+  public PlayerJumpingState playerJumpingState { get; private set; }
+  public PlayerDeadState playerDeadState { get; private set; }
+  public PlayerClimbingState playerClimbingState { get; private set; }
 
   // Movement parameters
   public float jumpHeight = 10f;
@@ -43,9 +44,17 @@ public class Player : MonoBehaviour
 
   public bool controlsEnabled = true;
   private Dictionary<State, PlayerState> States;
+
   public event Action<Checkpoint> OnCheckpointActivated;
+  public event Action<Player> OnInteract;
+
   private Interactable _currentInteractable;
   public GameObject Climbable;
+
+  private bool facingRight = true;
+
+  [SerializeField] public readonly int damageInvulnSecondsDuration = 1;
+  public bool isInvulnerable { get; private set; }
 
   void Awake()
   {
@@ -54,7 +63,7 @@ public class Player : MonoBehaviour
     playerInput = GetComponent<PlayerInput>();
     animator = GetComponent<Animator>();
     gameplayManager = GameObject.Find("GameManager").GetComponent<GameplayManager>();
-    playerInput.actions["Interact"].performed += OnInteract;
+    playerInput.actions["Interact"].performed += Interact;
 
     States = new Dictionary<State, PlayerState>() {
       {State.GROUNDED, playerGroundedState},
@@ -63,6 +72,8 @@ public class Player : MonoBehaviour
       {State.CLIMBING, playerClimbingState}
     };
     currentState = States[State.GROUNDED];
+
+    health.PlayerHealthChanged += OnHealthChange;
   }
 
   public void SetPlayerAssignment(PlayerAssignment pa)
@@ -76,14 +87,15 @@ public class Player : MonoBehaviour
     float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
     if (controlsEnabled)
     {
+      if (horizontalInput > 0)
+        facingRight = true;
+      else if (horizontalInput < 0)
+        facingRight = false;
       float horizontalVelocity = horizontalInput * runningSpeed;
-      if (horizontalVelocity != rigidBody.velocity.x)
-        transform.GetChild(0).transform.rotation = Quaternion.Euler(0, horizontalInput > 0 ? 90 : -90, 0);
       rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
-
-      //if (Input.GetKeyDown(KeyCode.LeftControl))
-      //  TransitionToState(State.DEAD);      
     }
+
+    transform.GetChild(0).transform.rotation = Quaternion.Euler(0, facingRight ? 90 : -90, 0);
 
     State? newState = currentState.CustomUpdate();
     if (newState.HasValue)
@@ -124,8 +136,8 @@ public class Player : MonoBehaviour
     rigidBody.position = Checkpoint;
     TransitionToState(State.GROUNDED);
 
-    // Reset player health
-    // Re-enable controls after X time
+    health.ResetHealth();
+    controlsEnabled = true;
   }
 
   public void OnTriggerEnter2D(Collider2D other)
@@ -140,8 +152,11 @@ public class Player : MonoBehaviour
       Climbable = other.gameObject;
   }
 
-  private void OnInteract(InputAction.CallbackContext context) =>
+  private void Interact(InputAction.CallbackContext context)
+  {
+    OnInteract?.Invoke(this);
     _currentInteractable?.Interact(this);
+  }
 
   private void OnTriggerExit2D(Collider2D other)
   {
@@ -150,5 +165,20 @@ public class Player : MonoBehaviour
 
     if (other.CompareTag("Climbable"))
       Climbable = null;
+  }
+
+  public bool canInteractWithSomething() => _currentInteractable != null;
+
+  public void OnHealthChange(int hpBefore, int hpAfter)
+  {
+    if (hpAfter < hpBefore && hpAfter > 0)
+      StartCoroutine(InvulnerabilityCoroutine());
+  }
+
+  IEnumerator InvulnerabilityCoroutine()
+  {
+    isInvulnerable = true;
+    yield return new WaitForSecondsRealtime(damageInvulnSecondsDuration);
+    isInvulnerable = false;
   }
 }
