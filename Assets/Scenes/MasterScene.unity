@@ -449,8 +449,8 @@ MonoBehaviour:
   m_MaximumDistance: 5000
   m_MinimumFOV: 3
   m_MaximumFOV: 60
-  m_MinimumOrthoSize: 12
-  m_MaximumOrthoSize: 30
+  m_MinimumOrthoSize: 8
+  m_MaximumOrthoSize: 10
 --- !u!1 &1227179003
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,8 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636546b905ec4d442bda64dfd90c7536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoadPlayersOnStart: Level1
-  doorToLoadPlayersOnStart: 1
+  sceneToLoadPlayersOnStart: Level4
+  doorToLoadPlayersOnStart: 0
   sceneLinks:
   - from:
       sceneName: Level1

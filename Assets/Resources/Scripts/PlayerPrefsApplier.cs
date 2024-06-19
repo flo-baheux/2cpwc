@@ -5,9 +5,9 @@ public class PlayerPrefsApplier : MonoBehaviour
 {
   [SerializeField] private AudioMixer mixer;
 
-  public static float defaultGlobalVolume = 1;
-  public static float defaultBGMVolume = 1;
-  public static float defaultSFXVolume = 1;
+  [SerializeField] public static float defaultGlobalVolume = 1;
+  [SerializeField] public static float defaultBGMVolume = 0.7f;
+  [SerializeField] public static float defaultSFXVolume = 1;
 
   void Start()
   {
