@@ -39,6 +39,9 @@ public class GameplayManager : MonoBehaviour
   private GameAudioController audioController;
   [SerializeField] private CinemachineVirtualCamera narrationCamera;
 
+  [SerializeField] private Player SimbaLevel4;
+  [SerializeField] private Player BastetLevel4;
+
   public void Awake()
   {
     SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive).completed += (AsyncOperation sceneLoad) =>
@@ -59,20 +62,45 @@ public class GameplayManager : MonoBehaviour
       SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoadPlayersOnStart));
       currentRoomManager = FindObjectOfType<DoorManager>();
 
-      Player1.gameObject.SetActive(true);
-      Player1.SetPlayerAssignment(PlayerAssignment.Player1);
-      Player1.playerDeadState.OnEnter += HandlePlayerDeath;
-      Player1.OnCheckpointActivated += HandleCheckpointActivated;
-
-      Player2.gameObject.SetActive(true);
-      Player2.SetPlayerAssignment(PlayerAssignment.Player2);
-      Player2.playerDeadState.OnEnter += HandlePlayerDeath;
-      Player2.OnCheckpointActivated += HandleCheckpointActivated;
+      SetupPlayer1();
+      SetupPlayer2();
 
       MovePlayersToSceneAtDoor(sceneToLoadPlayersOnStart, doorToLoadPlayersOnStart);
-      cameraTargetGroup.AddMember(Player1.transform, 1, 0);
-      cameraTargetGroup.AddMember(Player2.transform, 1, 0);
     };
+  }
+
+  public void SetupPlayer1()
+  {
+    Player1.gameObject.SetActive(true);
+    Player1.SetPlayerAssignment(PlayerAssignment.Player1);
+    Player1.playerDeadState.OnEnter += HandlePlayerDeath;
+    Player1.OnCheckpointActivated += HandleCheckpointActivated;
+    cameraTargetGroup.AddMember(Player1.transform, 1, 0);
+  }
+
+  public void SetupPlayer2()
+  {
+    Player2.gameObject.SetActive(true);
+    Player2.SetPlayerAssignment(PlayerAssignment.Player2);
+    Player2.playerDeadState.OnEnter += HandlePlayerDeath;
+    Player2.OnCheckpointActivated += HandleCheckpointActivated;
+    cameraTargetGroup.AddMember(Player2.transform, 1, 0);
+  }
+
+  public void UnsetupPlayer1()
+  {
+    Player1.gameObject.SetActive(false);
+    Player1.playerDeadState.OnEnter -= HandlePlayerDeath;
+    Player1.OnCheckpointActivated -= HandleCheckpointActivated;
+    cameraTargetGroup.RemoveMember(Player1.transform);
+  }
+
+  public void UnsetupPlayer2()
+  {
+    Player2.gameObject.SetActive(true);
+    Player2.playerDeadState.OnEnter -= HandlePlayerDeath;
+    Player2.OnCheckpointActivated -= HandleCheckpointActivated;
+    cameraTargetGroup.RemoveMember(Player2.transform);
   }
 
   public void RoomTransitionFrom(int doorId)
@@ -88,7 +116,6 @@ public class GameplayManager : MonoBehaviour
       return;
     }
     StartCoroutine(TransitionToRoom(target));
-
   }
 
   private IEnumerator TransitionToRoom(SceneDoorLink sceneDoorLink)
@@ -98,6 +125,18 @@ public class GameplayManager : MonoBehaviour
     else
       inTransition = true;
     Scene sceneBeforeTransition = SceneManager.GetActiveScene();
+
+    // Specifics for level 4
+    if (sceneDoorLink.sceneName == "Level4")
+    {
+      audioController.PlayAncientCityBGM();
+      UnsetupPlayer1();
+      UnsetupPlayer2();
+      Player1 = SimbaLevel4;
+      Player2 = BastetLevel4;
+      SetupPlayer1();
+      SetupPlayer2();
+    }
 
     AsyncOperation asyncLoadScene = SceneManager.LoadSceneAsync(sceneDoorLink.sceneName, LoadSceneMode.Additive);
     while (!asyncLoadScene.isDone)
