@@ -76,7 +76,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.48, y: 1.55}
   m_EdgeRadius: 0
 --- !u!114 &7527631592331775796
 MonoBehaviour:
@@ -281,4 +281,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitBox: {fileID: 8641727932284530748}
-  damageValue: 1
+  damageValue: 9
