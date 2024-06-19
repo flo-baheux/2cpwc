@@ -79,7 +79,7 @@ public class HUD : MonoBehaviour
 
   public void DisplayClimbPrompt(PlayerAssignment player, bool turnOn)
   {
-    Image prompt = player2ClimbPrompt;
+    Image prompt = player1ClimbPrompt;
     
     if (player == PlayerAssignment.Player2)
       prompt = player2ClimbPrompt;
