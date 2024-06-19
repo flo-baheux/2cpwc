@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class NarrationWidget : MonoBehaviour
@@ -13,7 +14,12 @@ public class NarrationWidget : MonoBehaviour
 
   public void TriggerNarration()
   {
-    Debug.Log("Triggering narration");
-    StartCoroutine(gameManager.TriggerNarrationCutsceneCoroutine(canvas.gameObject, narrationAudio));
+    StartCoroutine(TriggerNarrationThenDestroySelfCoroutine());
+  }
+
+  IEnumerator TriggerNarrationThenDestroySelfCoroutine()
+  {
+    yield return gameManager.TriggerNarrationCutsceneCoroutine(canvas.gameObject, narrationAudio);
+    Destroy(gameObject);
   }
 }
