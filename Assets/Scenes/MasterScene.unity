@@ -178,6 +178,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5578078348972161490, guid: ae62931ad5d9af34390c0e57f6791ff8, type: 3}
+      propertyPath: Climbable
+      value: 
+      objectReference: {fileID: 6306143967779188225, guid: d05ecc6c79f318f44b4c885fe4bbdbc9, type: 3}
+    - target: {fileID: 6535158081881788003, guid: ae62931ad5d9af34390c0e57f6791ff8, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -477,8 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636546b905ec4d442bda64dfd90c7536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoadPlayersOnStart: Level2
-  doorToLoadPlayersOnStart: 0
+  sceneToLoadPlayersOnStart: Level1
+  doorToLoadPlayersOnStart: 1
   sceneLinks:
   - from:
       sceneName: Level1
@@ -1193,6 +1201,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bastet_kitten Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6723399948989336208, guid: aa2f78adb4b8c1d42b0c8b5ae9bffd5e, type: 3}
+      propertyPath: Climbable
+      value: 
+      objectReference: {fileID: 6306143967779188225, guid: d05ecc6c79f318f44b4c885fe4bbdbc9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

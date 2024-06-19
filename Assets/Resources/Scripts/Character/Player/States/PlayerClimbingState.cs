@@ -22,7 +22,7 @@ public class PlayerClimbingState : PlayerState
         if (Player.controlsEnabled && Player.playerInput.actions["Jump"].WasPressedThisFrame())
         {
             Player.rigidBody.isKinematic = false;
-            Player.rigidBody.AddForce(Player.jumpHeight * 7f * Vector2.up, ForceMode2D.Impulse);
+            Player.rigidBody.AddForce(Player.jumpHeight * 10f * Vector2.up, ForceMode2D.Impulse);
             return State.JUMPING;
         }
         
