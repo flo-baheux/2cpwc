@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -11,12 +12,13 @@ public class MovingPlatforms : MonoBehaviour
     
     private Transform targetLocation;
     private int targetIndex = 1;
-    private BoxCollider2D _collider;
+    private Collider2D _collider;
 
     private void Awake()
     {
         transform.position = targetLocations[0].position;
         targetLocation = targetLocations[1];
+        _collider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -46,5 +48,24 @@ public class MovingPlatforms : MonoBehaviour
         {
             ChangeTargetLocation();
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (!other.gameObject.CompareTag("Player")) return;
+
+        // Divided by 4 instead of 2 for when there's a case where they're compared when player ends up inside the platform
+        float playerBottomPos = other.transform.position.y - other.collider.bounds.size.y / 4;
+        float platformTopPos = transform.position.y + _collider.bounds.size.y / 2;
+        
+        if (playerBottomPos > platformTopPos)
+            other.transform.parent = transform;
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (!other.gameObject.CompareTag("Player")) return;
+        
+        other.transform.parent = null;
     }
 }

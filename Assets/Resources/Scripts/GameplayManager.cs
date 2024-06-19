@@ -51,8 +51,10 @@ public class GameplayManager : MonoBehaviour
   public void LoadGameFromMainMenu()
   {
     SceneManager.UnloadSceneAsync("MainMenu");
+
     SceneManager.LoadSceneAsync(sceneToLoadPlayersOnStart, LoadSceneMode.Additive).completed += (AsyncOperation sceneLoad) =>
     {
+      SceneManager.LoadScene("IngameHUD", LoadSceneMode.Additive);
       audioController.PlayForestBGM();
       SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoadPlayersOnStart));
       currentRoomManager = FindObjectOfType<DoorManager>();
@@ -135,8 +137,11 @@ public class GameplayManager : MonoBehaviour
     Player2.RespawnToPosition(latestCheckpoint.transform.position);
   }
 
-  void HandleCheckpointActivated(Checkpoint checkpoint) =>
+  void HandleCheckpointActivated(Checkpoint checkpoint)
+  {
+    FindObjectOfType<HUD>().DisplayMessage("Checkpoint activated!");
     latestCheckpoint = checkpoint;
+  }
 
   public bool CompareCollectible(CollectibleScriptableObject collectible)
   {
