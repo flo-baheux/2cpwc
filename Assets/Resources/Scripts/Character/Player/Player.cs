@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
 
   public event Action<PlayerAssignment, bool> OnInteractionDetected;
   private Interactable _currentInteractable;
+  public event Action<PlayerAssignment, bool> OnClimbingDetected;
   public GameObject Climbable;
 
   private bool facingRight = true;
@@ -153,7 +154,11 @@ public class Player : MonoBehaviour
     }
 
     if (other.CompareTag("Climbable"))
+    {
       Climbable = other.gameObject;
+      OnClimbingDetected?.Invoke(playerAssignment, true);
+    }
+
   }
 
   private void Interact(InputAction.CallbackContext context)
@@ -171,7 +176,10 @@ public class Player : MonoBehaviour
     }
 
     if (other.CompareTag("Climbable"))
+    {
       Climbable = null;
+      OnClimbingDetected?.Invoke(playerAssignment, false);
+    }
   }
 
   public bool canInteractWithSomething() => _currentInteractable != null;

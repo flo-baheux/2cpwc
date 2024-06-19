@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -11,24 +12,25 @@ public class InteractPrompt : MonoBehaviour
     
     private void OnEnable()
     {
-        StopAllCoroutines();
-        StartCoroutine(FadeIn());
+        // StopAllCoroutines();
+        // StartCoroutine(FadeIn());
     }
 
     private void OnDisable()
     {
-        StartCoroutine(FadeOut());
-        StopAllCoroutines();
+        // StartCoroutine(FadeOut());
+        // StopAllCoroutines();
     }
 
-    private IEnumerator FadeIn()
+    private void SetPromptAlpha(float value)
     {
-        
-        yield return null;
-    }
+        Color promptColor = promptImage.color;
+        Color textColor = promptText.color;
 
-    private IEnumerator FadeOut()
-    {
-        yield return null;
+        promptColor.a = value;
+        textColor.a = value;
+
+        promptImage.color = promptColor;
+        promptText.color = textColor;
     }
 }
