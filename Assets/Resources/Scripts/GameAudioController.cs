@@ -47,6 +47,18 @@ public class GameAudioController : MonoBehaviour
     }
   }
 
+  public void PlayAncientCityBGM()
+  {
+    if (BGMSource.isPlaying)
+      StartCoroutine(FadeOutFadeIn(BGMSource, ancientCityBGM));
+    else
+    {
+      BGMSource.clip = forestBGM;
+      BGMSource.Play();
+      StartCoroutine(FadeIn(BGMSource));
+    }
+  }
+
   IEnumerator FadeOutFadeIn(AudioSource audioSource, AudioClip clip, int toVolume = 1, int fadeOutDuration = 1, int fadeInDuration = 1)
   {
     yield return StartCoroutine(FadeOut(audioSource, fadeOutDuration));
