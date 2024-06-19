@@ -14,7 +14,7 @@ public class HUD : MonoBehaviour
 
   [SerializeField] private Image player1ClimbPrompt;
   [SerializeField] private Image player2ClimbPrompt;
-  
+
   [SerializeField] private TextMeshProUGUI displayText;
 
   [SerializeField] private Vector3 promptOffset = new Vector3(0f, 2.5f, 0f);
@@ -26,7 +26,7 @@ public class HUD : MonoBehaviour
   private void Start()
   {
     _cam = Camera.main;
-    
+
     //StartCoroutine(DisplayInRow());
     Player[] players = FindObjectsByType<Player>(FindObjectsSortMode.None);
 
@@ -53,14 +53,14 @@ public class HUD : MonoBehaviour
   {
     Vector3 player1Pos = _player1.position;
     Vector3 player2Pos = _player2.position;
-    
+
     player1InteractPrompt.rectTransform.position = _cam.WorldToScreenPoint(player1Pos + promptOffset);
     player1ClimbPrompt.rectTransform.position = _cam.WorldToScreenPoint(player1Pos + promptOffset);
-    
+
     player2InteractPrompt.rectTransform.position = _cam.WorldToScreenPoint(player2Pos + promptOffset);
     player2ClimbPrompt.rectTransform.position = _cam.WorldToScreenPoint(player2Pos + promptOffset);
   }
-  
+
   private void ChangePlayer1Health(int previousHealth, int currentHealth) =>
       player1Health.text = $"{currentHealth}x";
 
@@ -79,12 +79,12 @@ public class HUD : MonoBehaviour
 
   public void DisplayClimbPrompt(PlayerAssignment player, bool turnOn)
   {
-    Image prompt = player1ClimbPrompt;
-    
-    if (player == PlayerAssignment.Player2)
-      prompt = player2ClimbPrompt;
+    // Image prompt = player1ClimbPrompt;
 
-    prompt.gameObject.SetActive(turnOn);
+    // if (player == PlayerAssignment.Player2)
+    //   prompt = player2ClimbPrompt;
+
+    // prompt.gameObject.SetActive(turnOn);
   }
 
   public void DisplayMessage(string message)
