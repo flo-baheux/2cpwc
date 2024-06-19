@@ -28,12 +28,10 @@ MonoBehaviour:
     instantiationMode: 0
   - dependency: {fileID: 11400000, guid: 63d9e8ab319054248b35f758c628c258, type: 2}
     instantiationMode: 1
-  - dependency: {fileID: 2800000, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-    instantiationMode: 1
   - dependency: {fileID: 7398566400970461931, guid: 45332405f93d1fa44b6e5e498cb26803, type: 3}
     instantiationMode: 1
-  - dependency: {fileID: 2800000, guid: 5f2a108eb023faf43a809979fd3d38f2, type: 3}
-    instantiationMode: 1
+  - dependency: {fileID: -8653719598885068355, guid: 816f208a034bd974fa967fa35d7d9aaa, type: 3}
+    instantiationMode: 0
   templatePipeline: {fileID: 0}
   badge: {fileID: 0}
   addToDefaults: 0

@@ -244,9 +244,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 3386330726516520333}
   damageValue: 1
-  explosionDelay: 3
+  explosionDelay: 0.5
   explosionDuration: 1
-  flashInterval: 0.2
+  flashInterval: 0.25
 --- !u!61 &4780212323213624853
 BoxCollider2D:
   m_ObjectHideFlags: 0

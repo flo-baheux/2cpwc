@@ -178,6 +178,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5578078348972161490, guid: ae62931ad5d9af34390c0e57f6791ff8, type: 3}
+      propertyPath: Climbable
+      value: 
+      objectReference: {fileID: 6306143967779188225, guid: d05ecc6c79f318f44b4c885fe4bbdbc9, type: 3}
+    - target: {fileID: 6535158081881788003, guid: ae62931ad5d9af34390c0e57f6791ff8, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -221,7 +229,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.45683515, g: 0.54075897, b: 0.5471698, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -271,7 +279,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.83, y: 6.3399997, z: -10}
+  m_LocalPosition: {x: 24.83, y: 6.3399997, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -422,7 +430,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.7
-  m_CameraDistance: 10
+  m_CameraDistance: 20
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
@@ -441,8 +449,8 @@ MonoBehaviour:
   m_MaximumDistance: 5000
   m_MinimumFOV: 3
   m_MaximumFOV: 60
-  m_MinimumOrthoSize: 4.5
-  m_MaximumOrthoSize: 5
+  m_MinimumOrthoSize: 12
+  m_MaximumOrthoSize: 30
 --- !u!1 &1227179003
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,44 +486,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoadPlayersOnStart: Level1
-  doorToLoadPlayersOnStart: 0
+  doorToLoadPlayersOnStart: 1
   sceneLinks:
   - from:
-      sceneName: StartRoom
-      doorId: 0
-    to:
-      sceneName: SecondRoom
-      doorId: 0
-  - from:
-      sceneName: StartRoom
+      sceneName: Level1
       doorId: 1
     to:
-      sceneName: SecondRoom
-      doorId: 1
-  - from:
-      sceneName: StartRoom
-      doorId: 2
-    to:
-      sceneName: SecondRoom
-      doorId: 2
-  - from:
-      sceneName: SecondRoom
-      doorId: 0
-    to:
-      sceneName: StartRoom
+      sceneName: Level2
       doorId: 0
   - from:
-      sceneName: SecondRoom
+      sceneName: Level2
       doorId: 1
     to:
-      sceneName: StartRoom
-      doorId: 1
+      sceneName: Level3
+      doorId: 0
   - from:
-      sceneName: SecondRoom
-      doorId: 2
+      sceneName: Level3
+      doorId: 1
     to:
-      sceneName: StartRoom
-      doorId: 2
+      sceneName: Level4
+      doorId: 0
   collectibles: []
   cameraTargetGroup: {fileID: 1642690680}
   currentRoomManager: {fileID: 0}
@@ -1152,7 +1142,7 @@ Transform:
   m_GameObject: {fileID: 1834480473}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.83, y: 6.3399997, z: -10}
+  m_LocalPosition: {x: 24.83, y: 6.3399997, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1210,6 +1200,14 @@ PrefabInstance:
     - target: {fileID: 6084269420086752867, guid: aa2f78adb4b8c1d42b0c8b5ae9bffd5e, type: 3}
       propertyPath: m_Name
       value: Bastet_kitten Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6723399948989336208, guid: aa2f78adb4b8c1d42b0c8b5ae9bffd5e, type: 3}
+      propertyPath: Climbable
+      value: 
+      objectReference: {fileID: 6306143967779188225, guid: d05ecc6c79f318f44b4c885fe4bbdbc9, type: 3}
+    - target: {fileID: 9047730424734570841, guid: aa2f78adb4b8c1d42b0c8b5ae9bffd5e, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
