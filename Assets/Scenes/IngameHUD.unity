@@ -978,7 +978,7 @@ GameObject:
   - component: {fileID: 668010495}
   - component: {fileID: 668010494}
   m_Layer: 5
-  m_Name: ClimbPrompt
+  m_Name: P1ClimbPrompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1188,7 +1188,7 @@ GameObject:
   - component: {fileID: 867267872}
   - component: {fileID: 867267871}
   m_Layer: 5
-  m_Name: ClimbPrompt
+  m_Name: P2ClimbPrompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1264,7 +1264,7 @@ GameObject:
   - component: {fileID: 1339925552}
   - component: {fileID: 1339925551}
   m_Layer: 5
-  m_Name: InteractPrompt
+  m_Name: P2InteractPrompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1340,7 +1340,7 @@ GameObject:
   - component: {fileID: 1600335692}
   - component: {fileID: 1600335691}
   m_Layer: 5
-  m_Name: InteractPrompt
+  m_Name: P1InteractPrompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
