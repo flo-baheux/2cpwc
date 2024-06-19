@@ -11,6 +11,7 @@ public class SettingsScreen : MonoBehaviour
   [SerializeField] private Slider GlobalVolumeSlider;
   [SerializeField] private Slider BGMVolumeSlider;
   [SerializeField] private Slider SFXVolumeSlider;
+  [SerializeField] private Slider NarrationVolumeSlider;
 
   [SerializeField] private Button BackToMenuButton;
 
@@ -24,6 +25,7 @@ public class SettingsScreen : MonoBehaviour
     GlobalVolumeSlider.value = PlayerPrefs.HasKey("GlobalVolume") ? PlayerPrefs.GetFloat("GlobalVolume") : PlayerPrefsApplier.defaultGlobalVolume;
     BGMVolumeSlider.value = PlayerPrefs.HasKey("BGMVolume") ? PlayerPrefs.GetFloat("BGMVolume") : PlayerPrefsApplier.defaultBGMVolume;
     SFXVolumeSlider.value = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : PlayerPrefsApplier.defaultSFXVolume;
+    NarrationVolumeSlider.value = PlayerPrefs.HasKey("NarrationVolume") ? PlayerPrefs.GetFloat("NarrationVolume") : PlayerPrefsApplier.defaultSFXVolume;
   }
 
 
@@ -45,6 +47,12 @@ public class SettingsScreen : MonoBehaviour
   {
     PlayerPrefs.SetFloat("SFXVolume", SFXVolumeSlider.value);
     mixer.SetFloat("SFXVolume", Mathf.Log10(SFXVolumeSlider.value) * 20);
+  }
+
+  public void OnNarrationVolumeChanged()
+  {
+    PlayerPrefs.SetFloat("NarrationVolume", NarrationVolumeSlider.value);
+    mixer.SetFloat("NarrationVolume", Mathf.Log10(NarrationVolumeSlider.value) * 20);
   }
 
   public void onClickCloseSettings()

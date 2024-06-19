@@ -11,8 +11,9 @@ public class GameAudioController : MonoBehaviour
   [SerializeField, Range(0, 1)] float maxBGMvolume;
   [SerializeField, Range(0, 1)] float maxSFXvolume;
 
-  private AudioSource BGMSource;
-  private AudioSource SFXSource;
+  [NonSerialized] public AudioSource BGMSource;
+  [NonSerialized] public AudioSource SFXSource;
+  [NonSerialized] public AudioSource NarrationSource;
 
   public void Awake()
   {
@@ -23,6 +24,8 @@ public class GameAudioController : MonoBehaviour
         BGMSource = source;
       else if (source.outputAudioMixerGroup.name == "SFX")
         SFXSource = source;
+      else if (source.outputAudioMixerGroup.name == "Narration")
+        NarrationSource = source;
     }
   }
 
