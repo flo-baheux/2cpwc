@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerClimbingState : PlayerState
 {
+  Vector2 lockPosition = Vector2.zero;
 
   public PlayerClimbingState(Player player) : base(player)
   {
@@ -10,31 +11,25 @@ public class PlayerClimbingState : PlayerState
 
   public override void Enter()
   {
-    Player.rigidBody.isKinematic = true;
-    Player.rigidBody.velocity = Vector2.zero;
-    Player.transform.position = Player.Climbable.transform.GetChild(0).position;
+    lockPosition = Player.Climbable.transform.GetChild(0).position;
   }
 
   public override State? CustomUpdate()
   {
-    if (Player.controlsEnabled && Player.playerInput.actions["Jump"].WasPressedThisFrame())
-    {
-      Player.rigidBody.isKinematic = false;
-      Player.transform.position = Player.Climbable.transform.GetChild(1).position;
-      return State.JUMPING;
-    }
+    Player.transform.position = lockPosition;
+    Player.rigidBody.velocity = Vector2.zero;
 
-    if (Player.controlsEnabled && Player.playerInput.actions["DropDown"].WasPressedThisFrame())
+    if (Player.controlsEnabled)
     {
-      Player.rigidBody.isKinematic = false;
-      return State.JUMPING;
+      if (Player.playerInput.actions["Jump"].WasPressedThisFrame())
+      {
+        Player.transform.position = Player.Climbable.transform.GetChild(1).position;
+        return State.JUMPING;
+      }
+      if (Player.playerInput.actions["DropDown"].WasPressedThisFrame())
+        return State.JUMPING;
     }
 
     return null;
-  }
-
-  public override void Exit()
-  {
-
   }
 }
