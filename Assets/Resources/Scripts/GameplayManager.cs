@@ -226,4 +226,11 @@ public class GameplayManager : MonoBehaviour
     Player1.controlsEnabled = true;
     Player2.controlsEnabled = true;
   }
+
+
+    public void DisablePlayersForFinalCutscene()
+    {
+        Player1.gameObject.SetActive(false);
+        Player2.gameObject.SetActive(false);
+    }
 }
