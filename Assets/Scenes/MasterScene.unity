@@ -622,7 +622,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoadPlayersOnStart: Level1
+<<<<<<< HEAD
   doorToLoadPlayersOnStart: 0
+=======
+  doorToLoadPlayersOnStart: 1
+>>>>>>> 0dabd4a (Fix climbing)
   sceneLinks:
   - from:
       sceneName: Level1

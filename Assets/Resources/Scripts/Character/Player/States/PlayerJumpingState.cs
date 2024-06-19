@@ -19,7 +19,7 @@ public class PlayerJumpingState : PlayerState
     Player.rigidBody.velocity = new Vector2(Player.rigidBody.velocity.x, Mathf.Max(Player.rigidBody.velocity.y, -Player.fallSpeed));
 
     // This part is for the climbing mechanic
-    if (Player.controlsEnabled && Player.playerInput.actions["Crouch"].WasPressedThisFrame())
+    if (Player.controlsEnabled && Player.playerInput.actions["Interact"].WasPressedThisFrame())
     {
       Debug.Log("Climb");
 
