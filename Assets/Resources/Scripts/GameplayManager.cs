@@ -139,7 +139,7 @@ public class GameplayManager : MonoBehaviour
 
   void HandleCheckpointActivated(Checkpoint checkpoint)
   {
-    FindObjectOfType<HUD>().DisplayMessage("Checkpoint activated!");
+    // FindObjectOfType<HUD>().DisplayMessage("Checkpoint activated!");
     latestCheckpoint = checkpoint;
   }
 
@@ -150,25 +150,26 @@ public class GameplayManager : MonoBehaviour
 
   public void PauseResumeGame()
   {
+    Debug.Log("PauseResume called - " + gamePaused);
     if (!gamePaused)
     {
       Time.timeScale = 0;
       Player1.controlsEnabled = false;
       Player2.controlsEnabled = false;
       SceneManager.LoadScene("IngameMenu", LoadSceneMode.Additive);
-      gamePaused = true;
     }
     else
     {
       AsyncOperation op = SceneManager.UnloadSceneAsync("IngameMenu");
+      Debug.Log(op);
       op.completed += (AsyncOperation _) =>
       {
         Time.timeScale = 1;
         Player1.controlsEnabled = true;
         Player2.controlsEnabled = true;
-        gamePaused = false;
       };
     }
+    gamePaused = !gamePaused;
   }
 
   public IEnumerator TriggerNarrationCutsceneCoroutine(GameObject narrationTarget, AudioClip audioNarration)
