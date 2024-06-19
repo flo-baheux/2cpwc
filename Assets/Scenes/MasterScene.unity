@@ -279,7 +279,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.83, y: 6.3399997, z: -10}
+  m_LocalPosition: {x: 24.83, y: 6.3399997, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.7
-  m_CameraDistance: 10
+  m_CameraDistance: 20
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
@@ -449,8 +449,8 @@ MonoBehaviour:
   m_MaximumDistance: 5000
   m_MinimumFOV: 3
   m_MaximumFOV: 60
-  m_MinimumOrthoSize: 4.5
-  m_MaximumOrthoSize: 5
+  m_MinimumOrthoSize: 12
+  m_MaximumOrthoSize: 30
 --- !u!1 &1227179003
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,7 +1142,7 @@ Transform:
   m_GameObject: {fileID: 1834480473}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.83, y: 6.3399997, z: -10}
+  m_LocalPosition: {x: 24.83, y: 6.3399997, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1205,6 +1205,10 @@ PrefabInstance:
       propertyPath: Climbable
       value: 
       objectReference: {fileID: 6306143967779188225, guid: d05ecc6c79f318f44b4c885fe4bbdbc9, type: 3}
+    - target: {fileID: 9047730424734570841, guid: aa2f78adb4b8c1d42b0c8b5ae9bffd5e, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
