@@ -75,7 +75,7 @@ public class GameplayManager : MonoBehaviour
     Player1.SetPlayerAssignment(PlayerAssignment.Player1);
     Player1.playerDeadState.OnEnter += HandlePlayerDeath;
     Player1.OnCheckpointActivated += HandleCheckpointActivated;
-    cameraTargetGroup.AddMember(Player1.transform, 1, 0);
+    cameraTargetGroup.AddMember(Player1.transform, 5, 2);
   }
 
   public void SetupPlayer2()
@@ -84,7 +84,7 @@ public class GameplayManager : MonoBehaviour
     Player2.SetPlayerAssignment(PlayerAssignment.Player2);
     Player2.playerDeadState.OnEnter += HandlePlayerDeath;
     Player2.OnCheckpointActivated += HandleCheckpointActivated;
-    cameraTargetGroup.AddMember(Player2.transform, 1, 0);
+    cameraTargetGroup.AddMember(Player2.transform, 5, 2);
   }
 
   public void UnsetupPlayer1()
@@ -211,20 +211,34 @@ public class GameplayManager : MonoBehaviour
     gamePaused = !gamePaused;
   }
 
-  public IEnumerator TriggerNarrationCutsceneCoroutine(GameObject narrationTarget, AudioClip audioNarration)
+  public IEnumerator TriggerNarrationCutsceneCoroutine(GameObject narrationTarget, AudioClip audioNarration, bool strongFocus)
   {
-    narrationTarget.SetActive(true);
-    narrationCamera.Follow = narrationTarget.transform;
-    narrationCamera.LookAt = narrationTarget.transform;
-    Player1.controlsEnabled = false;
-    Player2.controlsEnabled = false;
-    narrationCamera.gameObject.SetActive(true);
     audioController.NarrationSource.PlayOneShot(audioNarration);
-    yield return new WaitForSecondsRealtime(audioNarration.length + 1);
-    narrationCamera.gameObject.SetActive(false);
-    narrationTarget.SetActive(false);
-    Player1.controlsEnabled = true;
-    Player2.controlsEnabled = true;
+
+    narrationTarget.SetActive(true);
+    if (strongFocus)
+    {
+      narrationCamera.Follow = narrationTarget.transform;
+      narrationCamera.LookAt = narrationTarget.transform;
+
+      Player1.controlsEnabled = false;
+      Player2.controlsEnabled = false;
+
+      narrationCamera.gameObject.SetActive(true);
+      yield return new WaitForSecondsRealtime(audioNarration.length + 1);
+      narrationCamera.gameObject.SetActive(false);
+
+      Player1.controlsEnabled = true;
+      Player2.controlsEnabled = true;
+    }
+    else
+    {
+      cameraTargetGroup.AddMember(narrationTarget.transform, 2, 0);
+      audioController.NarrationSource.PlayOneShot(audioNarration);
+      yield return new WaitForSecondsRealtime(audioNarration.length + 1);
+      cameraTargetGroup.RemoveMember(narrationTarget.transform);
+      narrationTarget.SetActive(false);
+    }
   }
 
 

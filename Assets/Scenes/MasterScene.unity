@@ -182,6 +182,10 @@ PrefabInstance:
       propertyPath: Climbable
       value: 
       objectReference: {fileID: 6306143967779188225, guid: d05ecc6c79f318f44b4c885fe4bbdbc9, type: 3}
+    - target: {fileID: 5578078348972161490, guid: ae62931ad5d9af34390c0e57f6791ff8, type: 3}
+      propertyPath: fallSpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6535158081881788003, guid: ae62931ad5d9af34390c0e57f6791ff8, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 8
@@ -239,6 +243,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4238325144710835828, guid: 3af15fd491716d241a2b4e05a9f4c1fa, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8089195941519860422, guid: 3af15fd491716d241a2b4e05a9f4c1fa, type: 3}
+      propertyPath: fallSpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8746943431361420853, guid: 3af15fd491716d241a2b4e05a9f4c1fa, type: 3}
       propertyPath: m_Name
       value: Bastet_Adult
@@ -270,6 +282,14 @@ PrefabInstance:
     - target: {fileID: 3661795240493053642, guid: 5524bb6c7bc6ffc4a8c9a271eff6949b, type: 3}
       propertyPath: m_Name
       value: Simba_Old
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319151270371035705, guid: 5524bb6c7bc6ffc4a8c9a271eff6949b, type: 3}
+      propertyPath: fallSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319151270371035705, guid: 5524bb6c7bc6ffc4a8c9a271eff6949b, type: 3}
+      propertyPath: jumpHeight
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7241590286394298208, guid: 5524bb6c7bc6ffc4a8c9a271eff6949b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -415,7 +435,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.83, y: 10.34, z: -20}
+  m_LocalPosition: {x: 24.830002, y: 4.339999, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -565,28 +585,28 @@ MonoBehaviour:
   m_ZDamping: 1
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
-  m_ScreenY: 0.8
+  m_ScreenY: 0.65
   m_CameraDistance: 20
-  m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0
+  m_DeadZoneWidth: 0.05
+  m_DeadZoneHeight: 0.1
   m_DeadZoneDepth: 0
-  m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.8
+  m_UnlimitedSoftZone: 1
+  m_SoftZoneWidth: 2
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
   m_AdjustmentMode: 0
-  m_GroupFramingSize: 0.8
+  m_GroupFramingSize: 1
   m_MaxDollyIn: 5000
   m_MaxDollyOut: 5000
   m_MinimumDistance: 1
   m_MaximumDistance: 5000
   m_MinimumFOV: 3
   m_MaximumFOV: 60
-  m_MinimumOrthoSize: 8
-  m_MaximumOrthoSize: 10
+  m_MinimumOrthoSize: 7
+  m_MaximumOrthoSize: 8.5
 --- !u!1 &1227179003
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,7 +667,7 @@ MonoBehaviour:
   currentRoomManager: {fileID: 0}
   Player1: {fileID: 1343481086}
   Player2: {fileID: 2124686259}
-  narrationCamera: {fileID: 1401369366}
+  narrationCamera: {fileID: 0}
   SimbaLevel4: {fileID: 212149785}
   BastetLevel4: {fileID: 96158723}
 --- !u!4 &1227179005
@@ -1280,7 +1300,7 @@ Transform:
   m_GameObject: {fileID: 1834480473}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.83, y: 10.34, z: -20}
+  m_LocalPosition: {x: 24.830002, y: 4.339999, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1343,6 +1363,10 @@ PrefabInstance:
       propertyPath: Climbable
       value: 
       objectReference: {fileID: 6306143967779188225, guid: d05ecc6c79f318f44b4c885fe4bbdbc9, type: 3}
+    - target: {fileID: 6723399948989336208, guid: aa2f78adb4b8c1d42b0c8b5ae9bffd5e, type: 3}
+      propertyPath: fallSpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9047730424734570841, guid: aa2f78adb4b8c1d42b0c8b5ae9bffd5e, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 8

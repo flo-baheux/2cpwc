@@ -5,7 +5,9 @@ public class NarrationWidget : MonoBehaviour
 {
   [SerializeField] private Canvas canvas;
   [SerializeField] private AudioClip narrationAudio;
+  public bool strongFocus = false;
   private GameplayManager gameManager;
+  bool HasBeenActivated = false;
 
   void Start()
   {
@@ -14,12 +16,16 @@ public class NarrationWidget : MonoBehaviour
 
   public void TriggerNarration()
   {
-    StartCoroutine(TriggerNarrationThenDestroySelfCoroutine());
+    if (!HasBeenActivated)
+    {
+      HasBeenActivated = true;
+      StartCoroutine(TriggerNarrationThenDestroySelfCoroutine());
+    }
   }
 
   IEnumerator TriggerNarrationThenDestroySelfCoroutine()
   {
-    yield return gameManager.TriggerNarrationCutsceneCoroutine(canvas.gameObject, narrationAudio);
+    yield return gameManager.TriggerNarrationCutsceneCoroutine(canvas.gameObject, narrationAudio, strongFocus);
     Destroy(gameObject);
   }
 }
