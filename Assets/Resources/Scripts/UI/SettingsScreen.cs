@@ -31,17 +31,15 @@ public class SettingsScreen : MonoBehaviour
 
   public void OnGlobalVolumeChanged()
   {
-    PlayerPrefs.SetFloat("MasterVolume", GlobalVolumeSlider.value);
+    PlayerPrefs.SetFloat("GlobalVolume", GlobalVolumeSlider.value);
     mixer.SetFloat("MasterVolume", Mathf.Log10(GlobalVolumeSlider.value) * 20);
   }
-
 
   public void OnBGMVolumeChanged()
   {
     PlayerPrefs.SetFloat("BGMVolume", BGMVolumeSlider.value);
     mixer.SetFloat("BGMVolume", Mathf.Log10(BGMVolumeSlider.value) * 20);
   }
-
 
   public void OnSFXVolumeChanged()
   {

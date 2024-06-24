@@ -6,13 +6,13 @@ public class PlayerPrefsApplier : MonoBehaviour
   [SerializeField] private AudioMixer mixer;
 
   [SerializeField] public static float defaultGlobalVolume = 1;
-  [SerializeField] public static float defaultBGMVolume = 0.7f;
+  [SerializeField] public static float defaultBGMVolume = 1f;
   [SerializeField] public static float defaultSFXVolume = 1;
 
   void Start()
   {
-    if (PlayerPrefs.HasKey("MasterVolume"))
-      mixer.SetFloat("MasterVolume", Mathf.Log10(PlayerPrefs.GetFloat("MasterVolume")) * 20);
+    if (PlayerPrefs.HasKey("GlobalVolume"))
+      mixer.SetFloat("MasterVolume", Mathf.Log10(PlayerPrefs.GetFloat("GlobalVolume")) * 20);
     else
       mixer.SetFloat("MasterVolume", Mathf.Log10(defaultGlobalVolume) * 20);
 
