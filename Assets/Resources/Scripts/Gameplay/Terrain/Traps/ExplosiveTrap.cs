@@ -7,7 +7,6 @@ public class ExplosiveTrap : Trap
   [Space(10f)]
   [SerializeField] private float explosionDelay = 3f;
   [SerializeField] private float explosionDuration = 1f;
-  [SerializeField] private float flashInterval = 0.2f;
 
   private SpriteRenderer _sprite;
   private Color _originalColor;
@@ -18,40 +17,30 @@ public class ExplosiveTrap : Trap
     _originalColor = _sprite.color;
   }
 
-  public void DetonateExplosive()
-  {
-    Invoke(nameof(Explode), explosionDelay);
-    StartCoroutine(FlashColors());
-  }
+  public void OnTrigger() => StartCoroutine(Activate());
 
-  private void Explode()
+  public IEnumerator Activate()
   {
-    hitBox.SetActive(true);
-    Destroy(gameObject, 1f);
-  }
-
-  IEnumerator FlashColors()
-  {
-    float timer = explosionDelay;
-    bool isRed = false;
-
-    while (timer >= 0.0f)
+    float timer = 0f;
+    while (timer <= explosionDelay)
     {
-      timer -= flashInterval;
-
-      isRed = !isRed;
-      _sprite.color = isRed ? Color.red : _originalColor;
-
-      yield return new WaitForSeconds(flashInterval);
+      timer += Time.deltaTime;
+      _sprite.color = Color.Lerp(_originalColor, Color.red, Mathf.PingPong(Time.time * timer + 0.2f, 1));
+      yield return null;
     }
+    DealDamage();
+  }
+
+  private void DealDamage()
+  {
+    hitbox.gameObject.SetActive(true);
+    Destroy(gameObject, explosionDuration);
   }
 
   private void OnTriggerEnter2D(Collider2D other)
   {
     if (other.CompareTag("Player"))
-    {
-      DetonateExplosive();
-    }
+      OnTrigger();
   }
 }
 
@@ -65,10 +54,8 @@ public class ExplosiveTrapEditor : Editor
     DrawDefaultInspector();
 
     ExplosiveTrap trapClass = (ExplosiveTrap)target;
-    if (GUILayout.Button("Detonate Explosive"))
-    {
-      trapClass.DetonateExplosive();
-    }
+    if (GUILayout.Button("Trigger the trap"))
+      trapClass.OnTrigger();
   }
 }
 #endif

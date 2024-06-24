@@ -4075,8 +4075,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.45
+  m_Color: {r: 0.5896226, g: 1, b: 0.95590985, a: 1}
+  m_Intensity: 3.26
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -4098,7 +4098,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 12.96
+  m_PointLightOuterRadius: 8.3
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -7736,10 +7736,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3361472142738279926, guid: f7fc8642ae516e3428eb54d34d52e033, type: 3}
     - target: {fileID: 7833219855806675774, guid: c444b6d1a0ae50744a097a9ff4eb6a5b, type: 3}
-      propertyPath: projectileSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7833219855806675774, guid: c444b6d1a0ae50744a097a9ff4eb6a5b, type: 3}
       propertyPath: shootingDirection.y
       value: -5
       objectReference: {fileID: 0}
@@ -7757,11 +7753,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7897432529973922832, guid: c444b6d1a0ae50744a097a9ff4eb6a5b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -29.170086
+      value: -29.23
       objectReference: {fileID: 0}
     - target: {fileID: 7897432529973922832, guid: c444b6d1a0ae50744a097a9ff4eb6a5b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.082051285
+      value: -1.57
       objectReference: {fileID: 0}
     - target: {fileID: 7897432529973922832, guid: c444b6d1a0ae50744a097a9ff4eb6a5b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7795,8 +7791,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3370283992935513913, guid: c444b6d1a0ae50744a097a9ff4eb6a5b, type: 3}
+    - target: {fileID: 8555354281795222918, guid: c444b6d1a0ae50744a097a9ff4eb6a5b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -16514,7 +16513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2c3eec20d2b3f04c8b32a6d9ee52a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pd: {fileID: 1109169174}
+  playableDirector: {fileID: 0}
 --- !u!212 &1933653018
 SpriteRenderer:
   m_ObjectHideFlags: 0

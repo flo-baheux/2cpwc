@@ -1,5 +1,3 @@
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
-{
-}
+public class Checkpoint : MonoBehaviour { }

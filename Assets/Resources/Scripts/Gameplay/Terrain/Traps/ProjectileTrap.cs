@@ -3,21 +3,25 @@ using UnityEngine;
 public class ProjectileTrap : Trap
 {
   [Space(10f)]
-  [SerializeField] private Vector2 shootingDirection;
-  [SerializeField] private float projectileSpeed = 5f;
-  [SerializeField] private float spawnInterval = 3f;
-
-  private Vector2 _position;
+  [SerializeField] private GameObject projectilePrefab;
+  [SerializeField] private float projectileSpeed;
+  [SerializeField] private float spawnInterval;
+  [SerializeField] private float projectileLifespan;
+  [SerializeField] private int projectileDamage;
+  private Transform projectileEmitter;
 
   private void Awake()
   {
-    InvokeRepeating(nameof(ShootProjectile), 2f, spawnInterval);
-    _position = transform.position;
+    InvokeRepeating(nameof(ShootProjectile), 0, spawnInterval);
+    projectileEmitter = transform.GetChild(0);
   }
 
   private void ShootProjectile()
   {
-    GameObject newProjectile = Instantiate(hitBox, _position + shootingDirection, Quaternion.identity);
-    newProjectile.GetComponent<Rigidbody2D>().velocity = shootingDirection * projectileSpeed;
+    HitboxDamage projectile = Instantiate(projectilePrefab.gameObject, projectileEmitter.position, projectilePrefab.transform.rotation).GetComponent<HitboxDamage>();
+    projectile.gameObject.GetComponent<Rigidbody2D>().velocity = projectileEmitter.up * projectileSpeed;
+    projectile.damage = projectileDamage;
+    projectile.destroyAfterHit = true;
+    Destroy(projectile, projectileLifespan);
   }
 }

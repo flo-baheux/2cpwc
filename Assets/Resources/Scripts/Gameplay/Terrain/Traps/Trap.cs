@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-  [SerializeField] protected GameObject hitBox;
-  [SerializeField] private int damageValue = 1;
+  [SerializeField] protected GameObject hitbox;
+  [SerializeField] private int onHitDamage = 1;
 
   private void Awake()
   {
-    hitBox.GetComponent<HitBoxDamage>().SetDamageValue(damageValue);
+    if (hitbox)
+      hitbox.GetComponent<HitboxDamage>().damage = onHitDamage;
   }
 }

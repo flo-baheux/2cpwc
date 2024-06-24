@@ -17,11 +17,11 @@ public class TimedTrap : Trap
 
   private void ActivateHitBox()
   {
-    hitBox.SetActive(true);
+    hitbox.gameObject.SetActive(true);
   }
 
   private void DeactivateHitBox()
   {
-    hitBox.SetActive(false);
+    hitbox.gameObject.SetActive(false);
   }
 }

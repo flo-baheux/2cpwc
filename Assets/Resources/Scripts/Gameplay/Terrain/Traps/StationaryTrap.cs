@@ -1,5 +1,1 @@
-using UnityEngine;
-
-public class StationaryTrap : Trap
-{
-}
+public class StationaryTrap : Trap { }
