@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,6 +9,7 @@ public enum PlayerAssignment
   Player2,
 };
 
+[RequireComponent(typeof(PlayerHealthComponent))]
 public class Player : MonoBehaviour
 {
   Player()
@@ -18,50 +18,49 @@ public class Player : MonoBehaviour
     playerJumpingState = new PlayerJumpingState(this);
     playerDeadState = new PlayerDeadState(this);
     playerClimbingState = new PlayerClimbingState(this);
-    health = new PlayerHealthComponent(this);
   }
 
   public PlayerAssignment playerAssignment { get; private set; }
-  public PlayerHealthComponent health { get; private set; }
 
+  // States
   public PlayerGroundedState playerGroundedState { get; private set; }
   public PlayerJumpingState playerJumpingState { get; private set; }
   public PlayerDeadState playerDeadState { get; private set; }
   public PlayerClimbingState playerClimbingState { get; private set; }
-
-  // Movement parameters
-  public float jumpHeight = 10f;
-  public float fallSpeed = 12f;
-  public float runningSpeed = 15f;
-
-  [NonSerialized] public Rigidbody2D rigidBody;
-  [NonSerialized] public PlayerInput playerInput;
-  private CapsuleCollider2D capsuleCollider;
-  private Animator animator;
-  private GameplayManager gameplayManager;
-
+  private Dictionary<State, PlayerState> States;
   public PlayerState currentState;
 
+  // Movements
+  [SerializeField] public float jumpHeight { get; private set; } = 4f;
+  [SerializeField] public float fallSpeed { get; private set; } = 8f;
+  [SerializeField] public float runningSpeed { get; private set; } = 12f;
+  private bool facingRight = true;
   public bool controlsEnabled = true;
-  private Dictionary<State, PlayerState> States;
 
+  // Components
+  [NonSerialized] public Rigidbody2D rigidBody;
+  [NonSerialized] public PlayerInput playerInput;
+  public PlayerHealthComponent health { get; private set; }
+  private CapsuleCollider2D mainCollider;
+  private Animator animator;
+
+  // Gameplay Manager
+  private GameplayManager gameplayManager;
+
+  // Events
   public event Action<Checkpoint> OnCheckpointActivated;
   public event Action<Player> OnInteract;
-
   public event Action<PlayerAssignment, bool> OnInteractionDetected;
-  private Interactable _currentInteractable;
   public event Action<PlayerAssignment, bool> OnClimbingDetected;
-  public GameObject Climbable;
 
-  private bool facingRight = true;
-
-  [SerializeField] public readonly int damageInvulnSecondsDuration = 1;
-  public bool isInvulnerable { get; private set; }
+  private Interactable _currentInteractable;
+  public GameObject Climbable { get; private set; }
 
   void Awake()
   {
+    health = GetComponent<PlayerHealthComponent>();
     rigidBody = GetComponent<Rigidbody2D>();
-    capsuleCollider = GetComponent<CapsuleCollider2D>();
+    mainCollider = GetComponent<CapsuleCollider2D>();
     playerInput = GetComponent<PlayerInput>();
     animator = GetComponent<Animator>();
     gameplayManager = GameObject.Find("GameManager").GetComponent<GameplayManager>();
@@ -74,8 +73,6 @@ public class Player : MonoBehaviour
       {State.CLIMBING, playerClimbingState}
     };
     currentState = States[State.GROUNDED];
-
-    health.PlayerHealthChanged += OnHealthChange;
   }
 
   public void SetPlayerAssignment(PlayerAssignment pa)
@@ -114,17 +111,11 @@ public class Player : MonoBehaviour
 
   public bool IsGrounded()
   {
-    Vector2 center = new(capsuleCollider.bounds.center.x, capsuleCollider.bounds.min.y);
-    Vector2 size = new(capsuleCollider.bounds.size.x + 0.2f, 0.05f);
+    Vector2 center = new(mainCollider.bounds.center.x, mainCollider.bounds.min.y);
+    Vector2 size = new(mainCollider.bounds.size.x + 0.2f, 0.05f);
     RaycastHit2D raycastHit = Physics2D.BoxCast(center, size, 0f, Vector2.down, 0f, LayerMask.GetMask("Ground"));
     return raycastHit.collider;
   }
-
-  // // Debug IsGrounded box collider
-  // public void OnDrawGizmos()
-  // {
-  //   Gizmos.DrawCube(new Vector2(capsuleCollider.bounds.center.x, capsuleCollider.bounds.min.y), new Vector2(capsuleCollider.bounds.size.x + 0.2f, 0.05f));
-  // }
 
   public void TransitionToState(State newState)
   {
@@ -183,17 +174,4 @@ public class Player : MonoBehaviour
   }
 
   public bool canInteractWithSomething() => _currentInteractable != null;
-
-  public void OnHealthChange(int hpBefore, int hpAfter)
-  {
-    if (hpAfter < hpBefore && hpAfter > 0)
-      StartCoroutine(InvulnerabilityCoroutine());
-  }
-
-  IEnumerator InvulnerabilityCoroutine()
-  {
-    isInvulnerable = true;
-    yield return new WaitForSecondsRealtime(damageInvulnSecondsDuration);
-    isInvulnerable = false;
-  }
 }

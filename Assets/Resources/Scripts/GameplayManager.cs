@@ -242,9 +242,9 @@ public class GameplayManager : MonoBehaviour
   }
 
 
-    public void DisablePlayersForFinalCutscene()
-    {
-        Player1.gameObject.SetActive(false);
-        Player2.gameObject.SetActive(false);
-    }
+  public void DisablePlayersForFinalCutscene()
+  {
+    Player1.gameObject.SetActive(false);
+    Player2.gameObject.SetActive(false);
+  }
 }

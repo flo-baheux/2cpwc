@@ -30,7 +30,6 @@ public class AudioController : MonoBehaviour
     player.playerDeadState.OnEnter += OnDeath;
     player.health.PlayerHealthChanged += OnPlayerHealthChanged;
     player.OnInteract += OnInteract;
-
   }
 
   void OnJump(Player player) => SubtleSFXAudioSource.PlayOneShot(jump);

@@ -1,19 +1,23 @@
 using System;
+using System.Collections;
+using UnityEngine;
 
-public class PlayerHealthComponent
+[RequireComponent(typeof(Player))]
+public class PlayerHealthComponent : MonoBehaviour
 {
-  private readonly Player Player;
+  [SerializeField] private int maxHealth = 9;
+  [SerializeField] private int currentHealth = 9;
+  [SerializeField] private float InvulnerabilityDuration = 1;
 
-  public PlayerHealthComponent(Player player)
-  {
-    Player = player;
-    currentHealth = maxHealth;
-  }
-
-  public int maxHealth { get; private set; } = 9;
-  public int currentHealth { get; private set; }
+  private Player Player;
+  private bool IsInvulnerable = false;
 
   public event Action<int, int> PlayerHealthChanged;
+
+  private void Awake()
+  {
+    Player = GetComponent<Player>();
+  }
 
   public void AddHealth(int value)
   {
@@ -24,11 +28,13 @@ public class PlayerHealthComponent
 
   public void ReduceHealth(int value)
   {
-    if (!Player.isInvulnerable)
+    if (!IsInvulnerable)
     {
       int healthBefore = currentHealth;
       currentHealth = Math.Clamp(currentHealth - value, 0, maxHealth);
       PlayerHealthChanged?.Invoke(healthBefore, currentHealth);
+      if (currentHealth < healthBefore && currentHealth > 0)
+        StartCoroutine(InvulnerabilityCoroutine());
       if (currentHealth == 0)
         Player.TransitionToState(State.DEAD);
     }
@@ -39,5 +45,12 @@ public class PlayerHealthComponent
     int healthBefore = currentHealth;
     currentHealth = maxHealth;
     PlayerHealthChanged?.Invoke(healthBefore, currentHealth);
+  }
+
+  IEnumerator InvulnerabilityCoroutine()
+  {
+    IsInvulnerable = true;
+    yield return new WaitForSecondsRealtime(InvulnerabilityDuration);
+    IsInvulnerable = false;
   }
 }

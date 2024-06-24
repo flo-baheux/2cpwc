@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2614344317219274795}
   - component: {fileID: 3554725602205845952}
   - component: {fileID: 8919373028530161010}
+  - component: {fileID: 3966738322856880030}
   - component: {fileID: 1556181462327512155}
   - component: {fileID: 7705012638652262752}
   - component: {fileID: 7124420221546962435}
@@ -79,10 +80,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4ab9a1ef127144bbed4cc0bd3b6290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 3
-  fallSpeed: 12
-  runningSpeed: 15
   controlsEnabled: 1
+--- !u!114 &3966738322856880030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8279305994364057985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea0a068a73f4b7429c8218ee03c1cda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 9
+  currentHealth: 9
+  InvulnerabilityDuration: 1
 --- !u!114 &1556181462327512155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,8 +360,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e10d3f20faa544cbec32f26a2f1b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SFXAudioSource: {fileID: 0}
+  SubtleSFXAudioSource: {fileID: 0}
   jump: {fileID: 0}
+  fall: {fileID: 0}
   land: {fileID: 0}
+  takeDamage: []
+  vocalize: []
+  death: {fileID: 0}
 --- !u!95 &6231434999145720090
 Animator:
   serializedVersion: 5
