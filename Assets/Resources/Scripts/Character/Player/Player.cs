@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
   public bool controlsEnabled = true;
 
   // Components
+  public Renderer modelRenderer;
   [NonSerialized] public Rigidbody2D rigidBody;
   [NonSerialized] public PlayerInput playerInput;
   public PlayerHealthComponent health { get; private set; }

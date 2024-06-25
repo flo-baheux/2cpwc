@@ -242,8 +242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f20a2e5de5e114e81511a15cdc25ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitBox: {fileID: 3386330726516520333}
-  damageValue: 1
+  hitbox: {fileID: 3386330726516520333}
+  onHitDamage: 1
   explosionDelay: 0.5
   explosionDuration: 1
 --- !u!61 &4780212323213624853

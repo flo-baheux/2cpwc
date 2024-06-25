@@ -49,8 +49,17 @@ public class PlayerHealthComponent : MonoBehaviour
 
   IEnumerator InvulnerabilityCoroutine()
   {
+    Debug.Log(Time.time);
     IsInvulnerable = true;
-    yield return new WaitForSecondsRealtime(InvulnerabilityDuration);
+    float endTimer = Time.time + InvulnerabilityDuration;
+    while (Time.time <= endTimer)
+    {
+      Player.modelRenderer.enabled = false;
+      yield return new WaitForSeconds(0.125f);
+      Player.modelRenderer.enabled = true;
+      yield return new WaitForSeconds(0.125f);
+    }
+    Player.modelRenderer.enabled = true;
     IsInvulnerable = false;
   }
 }
