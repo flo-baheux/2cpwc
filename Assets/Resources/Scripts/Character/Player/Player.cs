@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
@@ -10,26 +9,10 @@ public enum PlayerAssignment
   Player2,
 };
 
-[RequireComponent(typeof(PlayerHealthComponent))]
+[RequireComponent(typeof(PlayerHealthComponent)), RequireComponent(typeof(PlayerStateComponent))]
 public class Player : MonoBehaviour
 {
-  Player()
-  {
-    playerGroundedState = new PlayerGroundedState(this);
-    playerJumpingState = new PlayerJumpingState(this);
-    playerDeadState = new PlayerDeadState(this);
-    playerClimbingState = new PlayerClimbingState(this);
-  }
-
   public PlayerAssignment playerAssignment { get; private set; }
-
-  // States
-  public PlayerGroundedState playerGroundedState { get; private set; }
-  public PlayerJumpingState playerJumpingState { get; private set; }
-  public PlayerDeadState playerDeadState { get; private set; }
-  public PlayerClimbingState playerClimbingState { get; private set; }
-  private Dictionary<State, PlayerState> States;
-  public PlayerState currentState;
 
   // Movements
   [SerializeField] private float jumpHeight = 4f;
@@ -46,6 +29,8 @@ public class Player : MonoBehaviour
   [NonSerialized] public Rigidbody2D rigidBody;
   [NonSerialized] public PlayerInput playerInput;
   public PlayerHealthComponent health { get; private set; }
+  public PlayerStateComponent state { get; private set; }
+
   private CapsuleCollider2D mainCollider;
   private Animator animator;
 
@@ -64,20 +49,13 @@ public class Player : MonoBehaviour
   void Awake()
   {
     health = GetComponent<PlayerHealthComponent>();
+    state = GetComponent<PlayerStateComponent>();
     rigidBody = GetComponent<Rigidbody2D>();
     mainCollider = GetComponent<CapsuleCollider2D>();
     playerInput = GetComponent<PlayerInput>();
     animator = GetComponent<Animator>();
     gameplayManager = GameObject.Find("GameManager").GetComponent<GameplayManager>();
     playerInput.actions["Interact"].performed += Interact;
-
-    States = new Dictionary<State, PlayerState>() {
-      {State.GROUNDED, playerGroundedState},
-      {State.JUMPING, playerJumpingState},
-      {State.DEAD, playerDeadState},
-      {State.CLIMBING, playerClimbingState}
-    };
-    currentState = States[State.GROUNDED];
   }
 
   public void SetPlayerAssignment(PlayerAssignment pa)
@@ -107,15 +85,11 @@ public class Player : MonoBehaviour
 
     transform.GetChild(0).transform.rotation = Quaternion.Euler(0, facingRight ? 90 : -90, 0);
 
-    State? newState = currentState.CustomUpdate();
-    if (newState.HasValue)
-      TransitionToState(newState.Value);
-
     animator.SetFloat("HorizontalInput", Math.Abs(horizontalInput));
     animator.SetFloat("VelocityY", rigidBody.velocity.y);
-    animator.SetBool("IsGrounded", currentState.state == State.GROUNDED);
-    animator.SetBool("IsCrouched", currentState.state == State.CROUCHING);
-    animator.SetBool("IsDead", currentState.state == State.DEAD);
+    animator.SetBool("IsGrounded", state.currentState.state == State.GROUNDED);
+    animator.SetBool("IsCrouched", state.currentState.state == State.CROUCHING);
+    animator.SetBool("IsDead", state.currentState.state == State.DEAD);
     if (playerInput.actions["Pause"].WasPressedThisFrame())
       gameplayManager.PauseResumeGame();
   }
@@ -128,18 +102,10 @@ public class Player : MonoBehaviour
     return raycastHit.collider;
   }
 
-  public void TransitionToState(State newState)
-  {
-    currentState.Exit();
-    currentState = States[newState];
-    currentState.Enter();
-  }
-
   public void RespawnToPosition(Vector2 Checkpoint)
   {
     rigidBody.position = Checkpoint;
-    TransitionToState(State.GROUNDED);
-
+    state.TransitionToState(State.GROUNDED);
     health.ResetHealth();
     controlsEnabled = true;
   }

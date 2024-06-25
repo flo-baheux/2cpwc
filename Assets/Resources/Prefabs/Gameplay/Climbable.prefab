@@ -168,7 +168,7 @@ PrefabInstance:
       addedObject: {fileID: 5648965182230941125}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e19f6feb8384bb64887714c4f6eda01e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4269233324457210447}
+      addedObject: {fileID: 6758943901854548955}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: e19f6feb8384bb64887714c4f6eda01e, type: 3}
 --- !u!4 &2758188661811269539 stripped
 Transform:
@@ -251,8 +251,8 @@ MonoBehaviour:
     m_Extent: {x: 0, y: 0, z: 0}
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
---- !u!60 &4269233324457210447
-PolygonCollider2D:
+--- !u!61 &6758943901854548955
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -283,26 +283,16 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.41, y: 9.05}
-    newSize: {x: 36.06, y: 36.73}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 3.0268092, y: 1.3477215}
-      - {x: 1.3653816, y: 9.311031}
-      - {x: 2.721125, y: 14.592848}
-      - {x: -0.71938115, y: 19.411634}
-      - {x: -2.231567, y: 18.433846}
-      - {x: -2.6114967, y: 11.392487}
-      - {x: -0.95105654, y: 0.30901697}
-      - {x: -0.5877852, y: -0.80901706}
-      - {x: 0.58778536, y: -0.80901694}
-      - {x: 2.632956, y: -0.91530985}
-  m_UseDelaunayMesh: 0
+  serializedVersion: 2
+  m_Size: {x: 4, y: 14}
+  m_EdgeRadius: 0

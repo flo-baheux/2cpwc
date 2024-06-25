@@ -973,7 +973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636546b905ec4d442bda64dfd90c7536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoadPlayersOnStart: Level4
+  sceneToLoadPlayersOnStart: Level1
   doorToLoadPlayersOnStart: 0
   sceneLinks:
   - from:

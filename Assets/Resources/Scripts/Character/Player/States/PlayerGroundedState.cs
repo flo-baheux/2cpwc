@@ -9,11 +9,17 @@ public class PlayerGroundedState : PlayerState
 
   public override State? CustomUpdate()
   {
-    if (Player.controlsEnabled && Player.playerInput.actions["Jump"].WasPressedThisFrame())
+    if (Player.controlsEnabled)
     {
-      float jumpForce = Mathf.Sqrt(Player.JumpHeight * -2 * (Physics2D.gravity.y * Player.rigidBody.gravityScale));
-      Player.rigidBody.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
-      return State.JUMPING;
+      if (Player.playerInput.actions["Jump"].WasPressedThisFrame())
+      {
+        if (Player.Climbable != null)
+          return State.CLIMBING;
+
+        float jumpForce = Mathf.Sqrt(Player.JumpHeight * -2 * (Physics2D.gravity.y * Player.rigidBody.gravityScale));
+        Player.rigidBody.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
+        return State.JUMPING;
+      }
     }
 
     if (!Player.IsGrounded())

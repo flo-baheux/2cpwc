@@ -6212,6 +6212,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.02
       objectReference: {fileID: 0}
+    - target: {fileID: 2291941692909038524, guid: ce5e020f8b27e1541969725608311c68, type: 3}
+      propertyPath: m_text
+      value: Jump close to the vine to climb! Keep jumping to reach new heights!
+      objectReference: {fileID: 0}
     - target: {fileID: 4281418806528672986, guid: ce5e020f8b27e1541969725608311c68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 85.42
@@ -7637,11 +7641,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2358648409587678815, guid: 45332405f93d1fa44b6e5e498cb26803, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.180008
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 2358648409587678815, guid: 45332405f93d1fa44b6e5e498cb26803, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.39
       objectReference: {fileID: 0}
     - target: {fileID: 5295476353881131478, guid: 45332405f93d1fa44b6e5e498cb26803, type: 3}
       propertyPath: m_LocalPosition.x

@@ -23,11 +23,13 @@ public class AudioController : MonoBehaviour
     player = GetComponent<Player>();
   }
 
-  void OnEnable()
+  // As the component only listen to events related to its own gameobject
+  // it's fine to have no unsubscribe method and sub during Start()
+  void Start()
   {
-    player.playerJumpingState.OnEnter += OnJump;
-    player.playerGroundedState.OnEnter += OnLand;
-    player.playerDeadState.OnEnter += OnDeath;
+    player.state.jumpingState.OnEnter += OnJump;
+    player.state.groundedState.OnEnter += OnLand;
+    player.state.deadState.OnEnter += OnDeath;
     player.health.PlayerHealthChanged += OnPlayerHealthChanged;
     player.OnInteract += OnInteract;
   }
@@ -46,15 +48,5 @@ public class AudioController : MonoBehaviour
   {
     if (!player.canInteractWithSomething())
       SFXAudioSource.PlayOneShot(vocalize.OrderBy(n => Guid.NewGuid()).ToArray()[0]);
-  }
-
-
-
-  void OnDisable()
-  {
-    player.playerJumpingState.OnEnter -= OnJump;
-    player.playerJumpingState.OnEnter -= OnLand;
-    player.playerDeadState.OnEnter -= OnDeath;
-    player.OnInteract -= OnInteract;
   }
 }

@@ -73,7 +73,7 @@ public class GameplayManager : MonoBehaviour
   {
     Player1.gameObject.SetActive(true);
     Player1.SetPlayerAssignment(PlayerAssignment.Player1);
-    Player1.playerDeadState.OnEnter += HandlePlayerDeath;
+    Player1.state.deadState.OnEnter += HandlePlayerDeath;
     Player1.OnCheckpointActivated += HandleCheckpointActivated;
     cameraTargetGroup.AddMember(Player1.transform, 5, 2);
   }
@@ -82,7 +82,7 @@ public class GameplayManager : MonoBehaviour
   {
     Player2.gameObject.SetActive(true);
     Player2.SetPlayerAssignment(PlayerAssignment.Player2);
-    Player2.playerDeadState.OnEnter += HandlePlayerDeath;
+    Player2.state.deadState.OnEnter += HandlePlayerDeath;
     Player2.OnCheckpointActivated += HandleCheckpointActivated;
     cameraTargetGroup.AddMember(Player2.transform, 5, 2);
   }
@@ -90,7 +90,7 @@ public class GameplayManager : MonoBehaviour
   public void UnsetupPlayer1()
   {
     Player1.gameObject.SetActive(false);
-    Player1.playerDeadState.OnEnter -= HandlePlayerDeath;
+    Player1.state.deadState.OnEnter -= HandlePlayerDeath;
     Player1.OnCheckpointActivated -= HandleCheckpointActivated;
     cameraTargetGroup.RemoveMember(Player1.transform);
   }
@@ -98,7 +98,7 @@ public class GameplayManager : MonoBehaviour
   public void UnsetupPlayer2()
   {
     Player2.gameObject.SetActive(true);
-    Player2.playerDeadState.OnEnter -= HandlePlayerDeath;
+    Player2.state.deadState.OnEnter -= HandlePlayerDeath;
     Player2.OnCheckpointActivated -= HandleCheckpointActivated;
     cameraTargetGroup.RemoveMember(Player2.transform);
   }
