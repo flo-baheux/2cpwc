@@ -189,7 +189,6 @@ public class GameplayManager : MonoBehaviour
 
   public void PauseResumeGame()
   {
-    Debug.Log("PauseResume called - " + gamePaused);
     if (!gamePaused)
     {
       Time.timeScale = 0;
@@ -200,7 +199,6 @@ public class GameplayManager : MonoBehaviour
     else
     {
       AsyncOperation op = SceneManager.UnloadSceneAsync("IngameMenu");
-      Debug.Log(op);
       op.completed += (AsyncOperation _) =>
       {
         Time.timeScale = 1;

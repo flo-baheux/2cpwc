@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 
 public enum PlayerAssignment
 {
@@ -31,9 +32,13 @@ public class Player : MonoBehaviour
   public PlayerState currentState;
 
   // Movements
-  [SerializeField] public float jumpHeight { get; private set; } = 4f;
-  [SerializeField] public float fallSpeed { get; private set; } = 8f;
-  [SerializeField] public float runningSpeed { get; private set; } = 12f;
+  [SerializeField] private float jumpHeight = 4f;
+  public float JumpHeight => jumpHeight;
+  [SerializeField] private float fallSpeed = 8f;
+  public float FallSpeed => fallSpeed;
+  [SerializeField] private float runningSpeed = 12f;
+  public float RunningSpeed => runningSpeed;
+
   private bool facingRight = true;
   public bool controlsEnabled = true;
 
@@ -78,6 +83,12 @@ public class Player : MonoBehaviour
   public void SetPlayerAssignment(PlayerAssignment pa)
   {
     playerAssignment = pa;
+    if (Gamepad.all.Count >= 2)
+    {
+      playerInput.user.UnpairDevices();
+      InputUser.PerformPairingWithDevice(Gamepad.all[(int)playerAssignment], playerInput.user);
+      playerInput.user.ActivateControlScheme("Gamepad");
+    }
     playerInput.SwitchCurrentActionMap(playerAssignment == PlayerAssignment.Player1 ? "Player1" : "Player2");
   }
 

@@ -11,7 +11,7 @@ public class PlayerGroundedState : PlayerState
   {
     if (Player.controlsEnabled && Player.playerInput.actions["Jump"].WasPressedThisFrame())
     {
-      float jumpForce = Mathf.Sqrt(Player.jumpHeight * -2 * (Physics2D.gravity.y * Player.rigidBody.gravityScale));
+      float jumpForce = Mathf.Sqrt(Player.JumpHeight * -2 * (Physics2D.gravity.y * Player.rigidBody.gravityScale));
       Player.rigidBody.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
       return State.JUMPING;
     }

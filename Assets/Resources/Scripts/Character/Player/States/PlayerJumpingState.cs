@@ -13,16 +13,14 @@ public class PlayerJumpingState : PlayerState
       return State.GROUNDED;
 
     if (Player.controlsEnabled && Player.playerInput.actions["Jump"].WasReleasedThisFrame())
-      Player.rigidBody.velocity = new Vector2(Player.rigidBody.velocity.x, -Player.fallSpeed);
+      Player.rigidBody.velocity = new Vector2(Player.rigidBody.velocity.x, -Player.FallSpeed);
 
     // Never fall faster than Player.fallSpeed
-    Player.rigidBody.velocity = new Vector2(Player.rigidBody.velocity.x, Mathf.Max(Player.rigidBody.velocity.y, -Player.fallSpeed));
+    Player.rigidBody.velocity = new Vector2(Player.rigidBody.velocity.x, Mathf.Max(Player.rigidBody.velocity.y, -Player.FallSpeed));
 
     // This part is for the climbing mechanic
     if (Player.controlsEnabled && Player.playerInput.actions["Interact"].WasPressedThisFrame())
     {
-      Debug.Log("Climb");
-
       if (Player.Climbable != null)
       {
         return State.CLIMBING;
