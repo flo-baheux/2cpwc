@@ -89,18 +89,19 @@ public class GameplayManager : MonoBehaviour
 
   public void UnsetupPlayer1()
   {
-    Player1.gameObject.SetActive(false);
     Player1.state.deadState.OnEnter -= HandlePlayerDeath;
     Player1.OnCheckpointActivated -= HandleCheckpointActivated;
     cameraTargetGroup.RemoveMember(Player1.transform);
+    Destroy(Player1.gameObject);
   }
 
   public void UnsetupPlayer2()
   {
-    Player2.gameObject.SetActive(true);
     Player2.state.deadState.OnEnter -= HandlePlayerDeath;
     Player2.OnCheckpointActivated -= HandleCheckpointActivated;
     cameraTargetGroup.RemoveMember(Player2.transform);
+    Destroy(Player2.gameObject);
+
   }
 
   public void RoomTransitionFrom(int doorId)
@@ -153,7 +154,7 @@ public class GameplayManager : MonoBehaviour
     SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(sceneName));
 
     Vector2 exitPosition = currentRoomManager.GetDoorExitPositionForPlayer(player.playerAssignment, doorId);
-    player.transform.position = exitPosition;
+    player.transform.position = new Vector3(exitPosition.x, exitPosition.y, player.transform.position.z);
   }
 
   void MovePlayersToSceneAtDoor(string sceneName, int doorId)
@@ -215,28 +216,13 @@ public class GameplayManager : MonoBehaviour
 
     narrationTarget.SetActive(true);
     if (strongFocus)
-    {
-      narrationCamera.Follow = narrationTarget.transform;
-      narrationCamera.LookAt = narrationTarget.transform;
-
-      Player1.controlsEnabled = false;
-      Player2.controlsEnabled = false;
-
-      narrationCamera.gameObject.SetActive(true);
-      yield return new WaitForSecondsRealtime(audioNarration.length + 1);
-      narrationCamera.gameObject.SetActive(false);
-
-      Player1.controlsEnabled = true;
-      Player2.controlsEnabled = true;
-    }
-    else
-    {
       cameraTargetGroup.AddMember(narrationTarget.transform, 2, 0);
-      audioController.NarrationSource.PlayOneShot(audioNarration);
-      yield return new WaitForSecondsRealtime(audioNarration.length + 1);
+    audioController.NarrationSource.PlayOneShot(audioNarration);
+    yield return new WaitForSecondsRealtime(audioNarration.length + 1);
+    if (strongFocus)
       cameraTargetGroup.RemoveMember(narrationTarget.transform);
-      narrationTarget.SetActive(false);
-    }
+
+    narrationTarget.SetActive(false);
   }
 
 

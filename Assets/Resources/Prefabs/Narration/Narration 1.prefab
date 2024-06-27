@@ -8,6 +8,63 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 893149294415849164, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 893149294415849164, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_text
+      value: <color="black">She searches her family...</color> <color="orange">he
+        searches a way home.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8d4134c9d58684540a35e584d3203639, type: 2}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_fontStyle
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_lineSpacing
+      value: -40.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_wordSpacing
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -5355886098220296215, guid: 8d4134c9d58684540a35e584d3203639, type: 2}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_characterSpacing
+      value: -5.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615118082188592869, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3660923184015272323, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -48,9 +105,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4968107910135055189, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968107910135055189, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968107910135055189, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968107910135055189, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968107910135055189, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6610440892338717682, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
       propertyPath: m_Name
-      value: NarrationWidget
+      value: Narration 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7622396867425996754, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_Color.a
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7622396867425996754, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7622396867425996754, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7622396867425996754, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471720885748935504, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471720885748935504, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8631314100031720954, guid: f696c5aa079dea7409ddffbe7be80fba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

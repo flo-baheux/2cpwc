@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6911803265191078021}
   - component: {fileID: -2038361659260301240}
   - component: {fileID: 7822663152983895842}
+  - component: {fileID: 966934902758650777}
   m_Layer: 7
   m_Name: ForestProjectile
   m_TagString: Threat
@@ -108,7 +109,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -128,7 +129,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -148,3 +149,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3.8
+--- !u!114 &966934902758650777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361472142738279926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c52a591b444a91e4dafb9a8175357340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

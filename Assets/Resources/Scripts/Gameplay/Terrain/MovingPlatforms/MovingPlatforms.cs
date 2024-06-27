@@ -10,13 +10,11 @@ public class MovingPlatforms : MonoBehaviour
 
   private Transform targetLocation;
   private int targetIndex = 1;
-  private Collider2D _collider;
 
   private void Awake()
   {
     transform.position = targetLocations[0].position;
     targetLocation = targetLocations[1];
-    _collider = GetComponent<PolygonCollider2D>();
   }
 
   private void Update()
@@ -30,9 +28,7 @@ public class MovingPlatforms : MonoBehaviour
     targetIndex++;
 
     if (targetIndex == targetLocations.Count)
-    {
       targetIndex = 0;
-    }
 
     targetLocation = targetLocations[targetIndex];
   }

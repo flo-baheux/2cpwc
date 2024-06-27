@@ -49,7 +49,6 @@ public class PlayerHealthComponent : MonoBehaviour
 
   IEnumerator InvulnerabilityCoroutine()
   {
-    Debug.Log(Time.time);
     IsInvulnerable = true;
     float endTimer = Time.time + InvulnerabilityDuration;
     while (Time.time <= endTimer)

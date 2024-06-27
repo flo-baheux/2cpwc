@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerClimbingState : PlayerState
 {
   Vector2 lockPosition = Vector2.zero;
+  Vector2 exitPosition = Vector2.zero;
 
   public PlayerClimbingState(Player player) : base(player)
   {
@@ -12,6 +13,8 @@ public class PlayerClimbingState : PlayerState
   public override void Enter()
   {
     lockPosition = Player.Climbable.transform.GetChild(0).position;
+    exitPosition = Player.Climbable.transform.GetChild(1).position;
+    base.Enter();
   }
 
   public override State? CustomUpdate()
@@ -23,7 +26,7 @@ public class PlayerClimbingState : PlayerState
     {
       if (Player.playerInput.actions["Jump"].WasPressedThisFrame())
       {
-        Player.transform.position = Player.Climbable.transform.GetChild(1).position;
+        Player.transform.position = new Vector3(exitPosition.x, exitPosition.y, Player.transform.position.z);
         return State.JUMPING;
       }
       if (Player.playerInput.actions["DropDown"].WasPressedThisFrame())

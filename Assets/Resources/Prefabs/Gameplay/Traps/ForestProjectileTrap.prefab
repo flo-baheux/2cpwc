@@ -208,9 +208,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitbox: {fileID: 2010582242795715949}
-  onHitDamage: 1
+  onHitDamage: 9
   projectilePrefab: {fileID: 3361472142738279926, guid: 8c7b900da35389b48bcfb67289b81c93, type: 3}
   projectileSpeed: 5
   spawnInterval: 3
-  projectileLifespan: 0
-  projectileDamage: 0
+  projectileLifespan: 5
+  projectileDamage: 1

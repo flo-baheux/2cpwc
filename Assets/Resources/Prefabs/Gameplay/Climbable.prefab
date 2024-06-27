@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1782097559558123777}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 1.79, y: 18.46, z: 0}
+  m_LocalPosition: {x: -3, y: 11.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 5140084123805644104}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 2.13, y: 9.16, z: 0}
+  m_LocalPosition: {x: 2.13, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -151,13 +151,14 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -6900818959896083359, guid: e19f6feb8384bb64887714c4f6eda01e, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -7552582706839291426, guid: e19f6feb8384bb64887714c4f6eda01e, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 5179771163351593732}
     - targetCorrespondingSourceObject: {fileID: -7552582706839291426, guid: e19f6feb8384bb64887714c4f6eda01e, type: 3}
-      insertIndex: 1
+      insertIndex: -1
       addedObject: {fileID: 2698387146287105525}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e19f6feb8384bb64887714c4f6eda01e, type: 3}
@@ -220,16 +221,16 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: -4986993443082655445, guid: e19f6feb8384bb64887714c4f6eda01e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 36.06, y: 36.73}
+  m_Size: {x: 7.78, y: 20.34}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &5648965182230941125
@@ -283,13 +284,13 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 7}
+  m_Offset: {x: 0, y: -2.8}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 7.78, y: 20.34}
+    newSize: {x: 7.78, y: 20.34}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0

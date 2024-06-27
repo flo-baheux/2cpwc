@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
   public event Action<Checkpoint> OnCheckpointActivated;
   public event Action<Player> OnInteract;
   public event Action<PlayerAssignment, bool> OnInteractionDetected;
-  public event Action<PlayerAssignment, bool> OnClimbingDetected;
 
   private Interactable _currentInteractable;
   public GameObject Climbable { get; private set; }
@@ -66,6 +65,12 @@ public class Player : MonoBehaviour
     {
       playerInput.user.UnpairDevices();
       InputUser.PerformPairingWithDevice(Gamepad.all[(int)playerAssignment], playerInput.user);
+      playerInput.user.ActivateControlScheme("Gamepad");
+    }
+    if (Gamepad.all.Count == 1 && playerAssignment == PlayerAssignment.Player1)
+    {
+      playerInput.user.UnpairDevices();
+      InputUser.PerformPairingWithDevice(Gamepad.all[0], playerInput.user);
       playerInput.user.ActivateControlScheme("Gamepad");
     }
     playerInput.SwitchCurrentActionMap(playerAssignment == PlayerAssignment.Player1 ? "Player1" : "Player2");
@@ -123,10 +128,7 @@ public class Player : MonoBehaviour
     }
 
     if (other.CompareTag("Climbable"))
-    {
       Climbable = other.gameObject;
-      OnClimbingDetected?.Invoke(playerAssignment, true);
-    }
 
   }
 
@@ -145,10 +147,7 @@ public class Player : MonoBehaviour
     }
 
     if (other.CompareTag("Climbable"))
-    {
       Climbable = null;
-      OnClimbingDetected?.Invoke(playerAssignment, false);
-    }
   }
 
   public bool canInteractWithSomething() => _currentInteractable != null;
