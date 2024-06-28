@@ -225,10 +225,9 @@ public class GameplayManager : MonoBehaviour
     narrationTarget.SetActive(false);
   }
 
-
   public void DisablePlayersForFinalCutscene()
   {
-    Player1.gameObject.SetActive(false);
-    Player2.gameObject.SetActive(false);
+    Player1.controlsEnabled = false;
+    Player2.controlsEnabled = false;
   }
 }
