@@ -78,20 +78,22 @@ public class Player : MonoBehaviour
 
   void Update()
   {
-    float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
     if (controlsEnabled)
     {
+      float horizontalInput = playerInput.actions["Move"].ReadValue<float>();
+
       if (horizontalInput > 0)
         facingRight = true;
       else if (horizontalInput < 0)
         facingRight = false;
       float horizontalVelocity = horizontalInput * runningSpeed;
       rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
+
+      animator.SetFloat("HorizontalInput", Math.Abs(horizontalInput));
     }
 
     transform.GetChild(0).transform.rotation = Quaternion.Euler(0, facingRight ? 90 : -90, 0);
 
-    animator.SetFloat("HorizontalInput", Math.Abs(horizontalInput));
     animator.SetFloat("VelocityY", rigidBody.velocity.y);
     animator.SetBool("IsGrounded", state.currentState.state == State.GROUNDED);
     animator.SetBool("IsCrouched", state.currentState.state == State.CROUCHING);

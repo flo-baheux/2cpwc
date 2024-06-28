@@ -37,7 +37,6 @@ public class GameplayManager : MonoBehaviour
   bool gamePaused = false;
 
   private GameAudioController audioController;
-  [SerializeField] private CinemachineVirtualCamera narrationCamera;
 
   [SerializeField] private Player SimbaLevel4;
   [SerializeField] private Player BastetLevel4;
@@ -101,7 +100,6 @@ public class GameplayManager : MonoBehaviour
     Player2.OnCheckpointActivated -= HandleCheckpointActivated;
     cameraTargetGroup.RemoveMember(Player2.transform);
     Destroy(Player2.gameObject);
-
   }
 
   public void RoomTransitionFrom(int doorId)
@@ -225,9 +223,17 @@ public class GameplayManager : MonoBehaviour
     narrationTarget.SetActive(false);
   }
 
-  public void DisablePlayersForFinalCutscene()
+  public void StartFinalCutscene()
   {
     Player1.controlsEnabled = false;
+    Player1.state.deadState.OnEnter -= HandlePlayerDeath;
+
     Player2.controlsEnabled = false;
+    Player2.state.deadState.OnEnter -= HandlePlayerDeath;
+
+    audioController.AdjustAudioForFinalCutscene();
+    SceneManager.UnloadSceneAsync("IngameHUD");
   }
+
+  public void SacrificeSimba() => Player1.state.TransitionToState(State.DEAD);
 }

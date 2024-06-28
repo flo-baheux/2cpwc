@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class Barrier : MonoBehaviour
 {
   [SerializeField] private bool disableColorChange = false;
@@ -8,12 +8,12 @@ public class Barrier : MonoBehaviour
   [SerializeField] private Color openColor;
   [SerializeField] private Color closedColor;
 
-  private BoxCollider2D _collider2D;
+  private Collider2D _collider2D;
   private SpriteRenderer _sprite;
 
   private void Awake()
   {
-    _collider2D = GetComponent<BoxCollider2D>();
+    _collider2D = GetComponent<Collider2D>();
     _sprite = GetComponent<SpriteRenderer>();
     _collider2D.enabled = !defaultOpen;
     if (!disableColorChange)

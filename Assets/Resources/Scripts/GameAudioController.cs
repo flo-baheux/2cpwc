@@ -59,6 +59,12 @@ public class GameAudioController : MonoBehaviour
     }
   }
 
+  public void AdjustAudioForFinalCutscene()
+  {
+    BGMSource.volume = 0.1f;
+    SFXSource.volume = 0.1f;
+  }
+
   IEnumerator FadeOutFadeIn(AudioSource audioSource, AudioClip clip, int toVolume = 1, int fadeOutDuration = 1, int fadeInDuration = 1)
   {
     yield return StartCoroutine(FadeOut(audioSource, fadeOutDuration));

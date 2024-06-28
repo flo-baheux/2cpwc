@@ -13,7 +13,9 @@ public class Shrine : MonoBehaviour, Interactable
 
   public void Interact(Player player)
   {
-    gameManager.DisablePlayersForFinalCutscene();
+    gameManager.StartFinalCutscene();
     playableDirector.Play();
   }
+
+  public void OnSacrifice() => gameManager.SacrificeSimba();
 }
