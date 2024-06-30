@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "2cpwc.sln"
+    "dotnet.defaultSolution": "Whiskers of the Heart.sln"
 }
