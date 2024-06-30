@@ -23,7 +23,7 @@ public class StartScreen : MonoBehaviour
     GameplayManager gameplayManager = GameObject.Find("GameManager").GetComponent<GameplayManager>();
     if (!gameplayManager)
       return;
-    gameplayManager.LoadGameFromMainMenu();
+    gameplayManager.StartGame();
   }
 
   public void OnClickSettingsScreen()

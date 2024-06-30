@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class DoorManager : MonoBehaviour
 {
-  public void Start()
+
+  public void Awake()
   {
     GameObject.Find("GameManager").GetComponent<GameplayManager>().currentRoomManager = this;
   }
 
+
   public Vector2 GetDoorExitPositionForPlayer(PlayerAssignment playerAssignment, int doorId)
   {
-
     foreach (Transform child in transform)
     {
       RoomDoor door = child.GetComponent<RoomDoor>();

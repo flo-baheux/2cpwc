@@ -35,7 +35,7 @@ public class PlayerHealthComponent : MonoBehaviour
       PlayerHealthChanged?.Invoke(healthBefore, currentHealth);
       if (currentHealth < healthBefore && currentHealth > 0)
         StartCoroutine(InvulnerabilityCoroutine());
-      if (currentHealth == 0)
+      if (currentHealth == 0 && Player.state.currentState.state != State.DEAD)
         Player.state.TransitionToState(State.DEAD);
     }
   }

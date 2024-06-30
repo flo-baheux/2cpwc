@@ -18,54 +18,56 @@ public class SceneDoorLink
   public string sceneName;
   public int doorId;
 }
+
 public class GameplayManager : MonoBehaviour
 {
+  // SCENES SETUP
   [SerializeField] private string sceneToLoadPlayersOnStart;
   [SerializeField] private int doorToLoadPlayersOnStart;
-
-  private Checkpoint latestCheckpoint;
   [SerializeField] private List<SceneToSceneLink> sceneLinks;
-  [SerializeField] private List<CollectibleScriptableObject> collectibles;
   [SerializeField] private CinemachineTargetGroup cameraTargetGroup;
 
-  public DoorManager currentRoomManager;
-
+  // CHARACTERS
   [SerializeField] private Player Player1;
   [SerializeField] private Player Player2;
-
-  bool inTransition = false;
-  bool gamePaused = false;
-
-  private GameAudioController audioController;
-
   [SerializeField] private Player SimbaLevel4;
   [SerializeField] private Player BastetLevel4;
 
+  // GAMEPLAY
+  public DoorManager currentRoomManager;
+  private Checkpoint latestCheckpoint;
+
+  // CONTROLLERS
+  private GameAudioController audioController;
+  [SerializeField] private SceneController sceneController;
+
+  private List<CollectibleScriptableObject> collectibles;
+
+  bool gamePaused = false;
+
   public void Awake()
   {
-    SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive).completed += (AsyncOperation sceneLoad) =>
+    sceneController = new SceneController();
+    sceneController.LoadMainMenu((AsyncOperation sceneLoad) =>
     {
       audioController = GetComponent<GameAudioController>();
       audioController.PlayDefaultAmbiantSounds();
-    };
+    });
   }
 
-  public void LoadGameFromMainMenu()
+  public void StartGame()
   {
-    SceneManager.UnloadSceneAsync("MainMenu");
-
-    SceneManager.LoadSceneAsync(sceneToLoadPlayersOnStart, LoadSceneMode.Additive).completed += (AsyncOperation sceneLoad) =>
+    sceneController.LoadGameFromMainMenu(sceneToLoadPlayersOnStart, (AsyncOperation asyncOperation) =>
     {
-      SceneManager.LoadScene("IngameHUD", LoadSceneMode.Additive);
       audioController.PlayForestBGM();
-      SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoadPlayersOnStart));
       currentRoomManager = FindObjectOfType<DoorManager>();
 
       SetupPlayer1();
       SetupPlayer2();
 
-      MovePlayersToSceneAtDoor(sceneToLoadPlayersOnStart, doorToLoadPlayersOnStart);
-    };
+      MovePlayersToScene(sceneToLoadPlayersOnStart);
+      MovePlayersToDoor(doorToLoadPlayersOnStart);
+    });
   }
 
   public void SetupPlayer1()
@@ -114,19 +116,9 @@ public class GameplayManager : MonoBehaviour
       Debug.LogError("No scene linked to that door!");
       return;
     }
-    StartCoroutine(TransitionToRoom(target));
-  }
-
-  private IEnumerator TransitionToRoom(SceneDoorLink sceneDoorLink)
-  {
-    if (inTransition)
-      yield break;
-    else
-      inTransition = true;
-    Scene sceneBeforeTransition = SceneManager.GetActiveScene();
 
     // Specifics for level 4
-    if (sceneDoorLink.sceneName == "Level4")
+    if (target.sceneName == "Level4")
     {
       audioController.PlayAncientCityBGM();
       UnsetupPlayer1();
@@ -137,36 +129,30 @@ public class GameplayManager : MonoBehaviour
       SetupPlayer2();
     }
 
-    AsyncOperation asyncLoadScene = SceneManager.LoadSceneAsync(sceneDoorLink.sceneName, LoadSceneMode.Additive);
-    while (!asyncLoadScene.isDone)
-      yield return null;
-    SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneDoorLink.sceneName));
-    MovePlayersToSceneAtDoor(sceneDoorLink.sceneName, sceneDoorLink.doorId);
-    SceneManager.UnloadSceneAsync(sceneBeforeTransition);
-
-    inTransition = false;
+    sceneController.TransitionToSceneDoor(
+      target,
+      (AsyncOperation asyncOperation) => MovePlayersToScene(target.sceneName),
+      (AsyncOperation asyncOperation) => MovePlayersToDoor(target.doorId)
+    );
   }
 
-  void MovePlayerToSceneAtDoor(Player player, string sceneName, int doorId)
+  void MovePlayersToScene(string sceneName)
   {
-    SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(sceneName));
-
-    Vector2 exitPosition = currentRoomManager.GetDoorExitPositionForPlayer(player.playerAssignment, doorId);
-    player.transform.position = new Vector3(exitPosition.x, exitPosition.y, player.transform.position.z);
+    SceneManager.MoveGameObjectToScene(Player1.gameObject, SceneManager.GetSceneByName(sceneName));
+    SceneManager.MoveGameObjectToScene(Player2.gameObject, SceneManager.GetSceneByName(sceneName));
   }
 
-  void MovePlayersToSceneAtDoor(string sceneName, int doorId)
+  void MovePlayersToDoor(int doorId)
   {
-    if (Player1)
-      MovePlayerToSceneAtDoor(Player1, sceneName, doorId);
-    if (Player2)
-      MovePlayerToSceneAtDoor(Player2, sceneName, doorId);
+    Vector2 P1ExitPosition = currentRoomManager.GetDoorExitPositionForPlayer(Player1.playerAssignment, doorId);
+    Player1.transform.position = new Vector3(P1ExitPosition.x, P1ExitPosition.y, Player1.transform.position.z);
+
+    Vector2 P2ExitPosition = currentRoomManager.GetDoorExitPositionForPlayer(Player2.playerAssignment, doorId);
+    Player2.transform.position = new Vector3(P2ExitPosition.x, P2ExitPosition.y, Player2.transform.position.z);
   }
 
-  void HandlePlayerDeath(Player player)
-  {
+  void HandlePlayerDeath(Player player) =>
     StartCoroutine(RespawnAfter3Secs());
-  }
 
   IEnumerator RespawnAfter3Secs()
   {
@@ -176,15 +162,10 @@ public class GameplayManager : MonoBehaviour
   }
 
   void HandleCheckpointActivated(Checkpoint checkpoint)
-  {
-    // FindObjectOfType<HUD>().DisplayMessage("Checkpoint activated!");
-    latestCheckpoint = checkpoint;
-  }
+    => latestCheckpoint = checkpoint;
 
   public bool CompareCollectible(CollectibleScriptableObject collectible)
-  {
-    return collectibles.Contains(collectible);
-  }
+    => collectibles.Contains(collectible);
 
   public void PauseResumeGame()
   {
@@ -193,17 +174,16 @@ public class GameplayManager : MonoBehaviour
       Time.timeScale = 0;
       Player1.controlsEnabled = false;
       Player2.controlsEnabled = false;
-      SceneManager.LoadScene("IngameMenu", LoadSceneMode.Additive);
+      sceneController.LoadPauseScene();
     }
     else
     {
-      AsyncOperation op = SceneManager.UnloadSceneAsync("IngameMenu");
-      op.completed += (AsyncOperation _) =>
+      sceneController.UnloadPauseScene((AsyncOperation _) =>
       {
         Time.timeScale = 1;
         Player1.controlsEnabled = true;
         Player2.controlsEnabled = true;
-      };
+      });
     }
     gamePaused = !gamePaused;
   }
@@ -232,8 +212,9 @@ public class GameplayManager : MonoBehaviour
     Player2.state.deadState.OnEnter -= HandlePlayerDeath;
 
     audioController.AdjustAudioForFinalCutscene();
-    SceneManager.UnloadSceneAsync("IngameHUD");
+    sceneController.UnloadIngameHUD();
   }
 
-  public void SacrificeSimba() => Player1.state.TransitionToState(State.DEAD);
+  public void SacrificeSimba()
+    => Player1.state.TransitionToState(State.DEAD);
 }

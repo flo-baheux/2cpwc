@@ -13,7 +13,7 @@ public class TutorialWidget : MonoBehaviour
   IEnumerator TriggerNarrationThenDestroySelfCoroutine()
   {
     canvas.gameObject.SetActive(true);
-    yield return new WaitForSecondsRealtime(3);
+    yield return new WaitForSecondsRealtime(10);
     Destroy(gameObject);
   }
 }

@@ -11,8 +11,9 @@ public class ExplosiveTrap : Trap
   private SpriteRenderer _sprite;
   private Color _originalColor;
 
-  private void Awake()
+  protected override void Awake()
   {
+    base.Awake();
     _sprite = GetComponent<SpriteRenderer>();
     _originalColor = _sprite.color;
   }
@@ -28,13 +29,17 @@ public class ExplosiveTrap : Trap
       _sprite.color = Color.Lerp(_originalColor, Color.red, Mathf.PingPong(Time.time * timer + 0.2f, 1));
       yield return null;
     }
-    DealDamage();
+    StartCoroutine(Explode());
   }
 
-  private void DealDamage()
+
+  private IEnumerator Explode()
   {
-    hitbox.gameObject.SetActive(true);
-    Destroy(gameObject, explosionDuration);
+    _sprite.enabled = false;
+    hitbox.SetActive(true);
+    yield return new WaitForSeconds(explosionDuration);
+    hitbox.GetComponent<Collider2D>().enabled = false;
+    Destroy(gameObject, 5f);
   }
 
   private void OnTriggerEnter2D(Collider2D other)

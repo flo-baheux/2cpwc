@@ -30,7 +30,7 @@ public class PlayerStateComponent : MonoBehaviour
       {State.CLIMBING, climbingState}
     };
 
-    currentState = groundedState;
+    currentState = jumpingState;
   }
 
   public void Update()

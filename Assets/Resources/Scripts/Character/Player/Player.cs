@@ -113,7 +113,7 @@ public class Player : MonoBehaviour
   public void RespawnToPosition(Vector2 Checkpoint)
   {
     rigidBody.position = Checkpoint;
-    state.TransitionToState(State.GROUNDED);
+    state.TransitionToState(State.JUMPING);
     health.ResetHealth();
     controlsEnabled = true;
   }

@@ -10,8 +10,9 @@ public class ProjectileTrap : Trap
   [SerializeField] private int projectileDamage;
   private Transform projectileEmitter;
 
-  private void Awake()
+  protected override void Awake()
   {
+    base.Awake();
     InvokeRepeating(nameof(ShootProjectile), 0, spawnInterval);
     projectileEmitter = transform.GetChild(0);
   }
